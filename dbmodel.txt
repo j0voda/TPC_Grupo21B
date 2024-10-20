@@ -1,0 +1,47 @@
+ROLES [Tabla]: 
+	-1  - Cliente
+	-2  - Telefonista
+	-3  - Supervisor
+	-4  - Administrador
+
+USER [Tabla y Clase]:
+	- Id
+	- Username
+	- Nombres
+	- Apellidos
+	- Mail
+	- Password
+	- CreatedAt
+	- LastUpdatedAt
+	- Documento ? No parece necesario
+	- Sexo
+	- RolId ? O tabla UsersRoles
+
+TICKET (Incidente) [Tabla y Clase]:
+	- Id
+	- Asunto
+	- UserId (creado por el usuario tal)
+	- EstadoId
+	- CreatedAt
+	- UpdatedAt
+	- ClasificacionId (tipo)
+	- PrioridadId
+
+TICKETS EVENTOS [Tabla]:
+	- Id
+	- TicketId
+	- UserId
+	- Descripcion
+	- CreatedAt
+	- LastUpdatedAt
+
+TICKETS CLASIFICACIONES [Tabla]:
+	-1  - Soporte técnico
+	-2  - Consulta no técnica
+	-3  - Reporte de falla/bug
+	-4  - Solicitud de mejora/feature
+
+TICKETS PRIORIDADES [Tabla]:
+	- Normal - azul/verde(color ícono)
+	- Importante - amarillo(color ícono)
+	- Urgente - rojo(color ícono)
