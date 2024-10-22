@@ -1,0 +1,89 @@
+Create Database TPC_CALLCENTER
+Go
+Use TPC_CALLCENTER
+Go
+
+Create Table Roles(
+	Id int not null primary key identity(1, 1),
+	Descripcion varchar(30) not null
+)
+Go
+Insert into Roles(Descripcion) values
+('Telefonista'),
+('Supervisor'),
+('Administrador');
+Go
+
+Create Table Estados(
+	Id int not null primary key identity(1, 1),
+	Descripcion varchar(30) not null
+)
+Go
+Insert into Estados(Descripcion) values
+('Abierto'),
+('En análisis'),
+('Cerrado'),
+('Reabierto'),
+('Asignado'),
+('Resuelto');
+Go
+
+Create Table Clasificaciones(
+	Id int not null primary key identity (1, 1),
+	Descripcion varchar(50) not null
+)
+Go
+Insert into Clasificaciones(Descripcion) values
+('Soporte ténico'),
+('Soporte comercial'),
+('Reporte de falla'),
+('Solicitud de mejora');
+Go
+
+Create Table Prioridades(
+	Id int not null primary key identity(1, 1),
+	Descripcion varchar(50) not null,
+	Color nvarchar(50) null
+)
+Go
+Insert into Prioridades(Descripcion, Color) values
+('Baja', '#008000'),
+('Normal', '#ffed29'),
+('Alta', '#ff2c2c');
+Go
+
+Create Table Usuarios(
+	Id bigint not null primary key identity(1, 1),
+	Username varchar(50) not null,
+	Password varchar(50) not null,
+	Nombres varchar(50) not null,
+	Apellidos varchar(50) not null,
+	Email varchar(50) not null,
+	CreatedAt datetime not null,
+	LastUpdatedAt datetime not null,
+	Documento bigint not null,
+	Sexo varchar(1) null,
+	RolId int not null foreign key references Roles(Id)
+)
+Go
+
+Create Table Clientes(
+	Documento bigint primary key not null,
+	Nombres varchar(50) not null,
+	Apellidos varchar(50) not null,
+	Email varchar(50) not null
+)
+Go
+
+Create Table Tickets(
+	Id bigint not null primary key identity(1, 1),
+	Asunto nvarchar(max) not null,
+	UserId bigint null foreign key references Usuarios(Id),
+	ClientDocument bigint not null foreign key references Clientes(Documento),
+	EstadoId int not null foreign key references Estados(Id),
+	CreatedAt datetime not null,
+	LastUpdatedAt datetime not null,
+	ClasificacionId int not null foreign key references Clasificaciones(Id),
+	PrioridadId int not null foreign key references Prioridades(Id)
+)
+Go
