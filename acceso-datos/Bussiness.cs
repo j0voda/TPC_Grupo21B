@@ -28,7 +28,7 @@ namespace acceso_datos
             {
                 DataSource = ".\\SQLEXPRESS",
                 //DataSource = "localhost",
-                InitialCatalog = "PROMOS_DB",
+                InitialCatalog = "TPC_CALLCENTER",
                 IntegratedSecurity = true
             };
 

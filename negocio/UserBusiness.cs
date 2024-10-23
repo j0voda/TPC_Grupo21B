@@ -20,11 +20,24 @@ namespace negocio
                 "Apellidos", 
                 "Email", 
                 "CreatedAt", 
-                "LastUpdateAt", 
+                "LastUpdatedAt", 
                 "Documento", 
                 "Sexo", 
                 "RolId" 
             };
+        }
+
+        public User getOneByUserPass(string user, string pass)
+        {
+            List<User> result = base.select(
+                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}", $" WHERE t.Username='{user}' AND t.Password='{pass}'");
+
+            if (result.Count == 0)
+            {
+                return default;
+            }
+
+            return result[0];
         }
     }
 }

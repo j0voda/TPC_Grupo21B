@@ -66,6 +66,45 @@ Create Table Usuarios(
 	RolId int not null foreign key references Roles(Id)
 )
 Go
+Insert into Usuarios values (
+	'admin', 
+	'admin',
+	'Carlos',
+	'Fernandez',
+	'carlosfernandez@gmail.com',
+	CURRENT_TIMESTAMP,
+	CURRENT_TIMESTAMP,
+	38999333,
+	'M',
+	3
+)
+Go
+Insert into Usuarios values (
+	'telefonista', 
+	'telefonista',
+	'Laura',
+	'Lopez',
+	'lauralopez@gmail.com',
+	CURRENT_TIMESTAMP,
+	CURRENT_TIMESTAMP,
+	35444333,
+	'F',
+	1
+)
+Go
+Insert into Usuarios values (
+	'supervisor', 
+	'supervisor',
+	'Edwin',
+	'Ruiz',
+	'edwinruiz@gmail.com',
+	CURRENT_TIMESTAMP,
+	CURRENT_TIMESTAMP,
+	39762238,
+	'F',
+	2
+)
+Go
 
 Create Table Clientes(
 	Documento bigint primary key not null,
@@ -73,6 +112,8 @@ Create Table Clientes(
 	Apellidos varchar(50) not null,
 	Email varchar(50) not null
 )
+Go
+Insert into Clientes values (40444555, 'Cliente', 'De Prueba', 'clienteprueba@gmail.com');
 Go
 
 Create Table Tickets(
@@ -84,6 +125,18 @@ Create Table Tickets(
 	CreatedAt datetime not null,
 	LastUpdatedAt datetime not null,
 	ClasificacionId int not null foreign key references Clasificaciones(Id),
-	PrioridadId int not null foreign key references Prioridades(Id)
+	PrioridadId int not null foreign key references Prioridades(Id),
+	Descripcion nvarchar(max)
 )
+Go
+Insert into Tickets values (
+	'Ticket de prueba',
+	2,
+	40444555,
+	1,
+	CURRENT_TIMESTAMP,
+	CURRENT_TIMESTAMP,
+	1,
+	1
+);
 Go
