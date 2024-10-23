@@ -45,7 +45,18 @@
     <Compile Include="TicketBusiness.cs" />
     <Compile Include="UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserMapper.cs" />
     <Compile Include="Validators.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\acceso-datos\acceso_datos.csproj">
+      <Project>{1700c432-a93b-4880-89a7-dff09b5801de}</Project>
+      <Name>acceso_datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\dominio\dominio.csproj">
+      <Project>{a43eab6c-8087-44d8-97b6-f63af03e3434}</Project>
+      <Name>dominio</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

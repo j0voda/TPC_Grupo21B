@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Bussiness.cs" />
     <Compile Include="IDBMapper.cs" />
+    <Compile Include="QueryValuesBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

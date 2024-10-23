@@ -15,9 +15,11 @@ namespace dominio
         public string Password { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+        public string Email { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
+        public string Documento { get; set; }
         public string Sexo { get; set; }
-        public string Rol { get; set; }
+        public int Rol { get; set; }
     }
 }

@@ -18,10 +18,9 @@ namespace acceso_datos
         public SqlDataReader reader;
         private IDBMapper<T> mapper;
 
-        public Bussiness(string tableName, string idColumn, List<string> rows, IDBMapper<T> mapper)
+        public Bussiness(string tableName, string idColumn, IDBMapper<T> mapper)
         {
             this.idColumn = idColumn;
-            this.columns = rows;
             this.mapper = mapper;
             this.tableName = tableName;
 
