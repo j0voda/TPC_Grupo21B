@@ -3,42 +3,54 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">ASP.NET</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+        <section class="row mb-4">
+            <h2 id="aspnetTitle" class="fs-3">Bienvenido: Juan</h2>
+            <h3 class="fs-5">Rol: Operador</h3>
         </section>
-
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
-            </section>
-        </div>
+        <section class="mb-4">
+            <a href="/ticket" class="btn btn-primary">Crear nueva incidencia</a>
+        </section>
+        <section class="row">
+            <h3 class="">Tus tickes:</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Asunto</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Asignado</th>
+                        <th scope="col">Prioridad</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Ticket de prueba</td>
+                        <td>Abierto</td>
+                        <td>Tú</td>
+                        <td>Baja</td>
+                        <td><button class="btn btn-primary btn-sm">IR A VER</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Ticket de prueba</td>
+                        <td>Abierto</td>
+                        <td>Tú</td>
+                        <td>Baja</td>
+                        <td><button class="btn btn-primary btn-sm">IR A VER</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Ticket de prueba</td>
+                        <td>Abierto</td>
+                        <td>Tú</td>
+                        <td>Baja</td>
+                        <td><button class="btn btn-primary btn-sm">IR A VER</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </main>
 
 </asp:Content>
