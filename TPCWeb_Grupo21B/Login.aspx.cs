@@ -68,7 +68,7 @@ namespace TPCWeb_Grupo21B
                 return;
             }
 
-            Session.Add("usuario", u.Id);
+            Session.Add("usuario", u);
 
             Response.Redirect("Default.aspx");
         }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TickerCreation.aspx.cs" Inherits="TPCWeb_Grupo21B.Screens.TickerCreation" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TicketCreation.aspx.cs" Inherits="TPCWeb_Grupo21B.Screens.TickerCreation" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>
@@ -29,7 +29,7 @@
                 <select class="form-select">
                     <option value="value1">Alta</option>
                     <option value="value2" selected>Media</option>
-                    <option value="value3">Naja</option>
+                    <option value="value3">Baja</option>
                 </select>
             </div>
             <div>

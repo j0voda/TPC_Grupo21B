@@ -123,7 +123,7 @@
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="TickerCreation.aspx" />
+    <Content Include="TicketCreation.aspx" />
     <Content Include="Ticket.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -228,12 +228,12 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TickerCreation.aspx.cs">
-      <DependentUpon>TickerCreation.aspx</DependentUpon>
+    <Compile Include="TicketCreation.aspx.cs">
+      <DependentUpon>TicketCreation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TickerCreation.aspx.designer.cs">
-      <DependentUpon>TickerCreation.aspx</DependentUpon>
+    <Compile Include="TicketCreation.aspx.designer.cs">
+      <DependentUpon>TicketCreation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ticket.aspx.cs">
       <DependentUpon>Ticket.aspx</DependentUpon>

@@ -4,14 +4,14 @@
 
     <main>
         <section class="row mb-4">
-            <h2 id="aspnetTitle" class="fs-3">Bienvenido: Juan</h2>
-            <h3 class="fs-5">Rol: Operador</h3>
+            <h2 id="aspnetTitle" class="fs-3">Bienvenido: <%: user.Nombres %></h2>
+            <h3 class="fs-5">Rol: <%: (user.RolId == 1 ? "Telefonista" : (user.RolId == 2 ? "Supervisor" : "Administrador")) %></h3>
         </section>
         <section class="mb-4">
-            <a href="/ticket" class="btn btn-primary">Crear nueva incidencia</a>
+            <a href="/TicketCreation" class="btn btn-primary">Crear nueva incidencia</a>
         </section>
         <section class="row">
-            <h3 class="">Tus tickes:</h3>
+            <h3 class="">Tus tickets:</h3>
             <table class="table">
                 <thead>
                     <tr>
