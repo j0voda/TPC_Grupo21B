@@ -19,7 +19,7 @@
 
         <div class="col-3">
             <asp:Label runat="server" CssClass="control-label mb-1" AssociatedControlID="password">Contraseña:</asp:Label>
-            <asp:TextBox ID="password" runat="server" CssClass="form-control" ClientIDMode="Static" OnTextChanged="password_TextChanged"></asp:TextBox>
+            <asp:TextBox ID="password" runat="server" CssClass="form-control" ClientIDMode="Static" OnTextChanged="password_TextChanged" TextMode="Password"></asp:TextBox>
         </div>
 
         <asp:Button ID="btnNext" runat="server" Text="Ingresar" CssClass="btn btn-primary mt-2" OnClick="btnNext_Click" />

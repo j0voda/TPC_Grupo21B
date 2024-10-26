@@ -58,17 +58,13 @@ namespace TPCWeb_Grupo21B
                 updateErrors();
             }
 
-            UserBusiness userBusiness = new UserBusiness();
-
-            User u = userBusiness.getOneByUserPass(user, pass);
+            User u = AuthorizationManager.getInstance().logIn(user, pass);
 
             if (u == null)
             {
                 updateErrors("Credenciales incorrectas.");
-                return;
+                return;    
             }
-
-            Session.Add("usuario", u);
 
             Response.Redirect("Default.aspx");
         }

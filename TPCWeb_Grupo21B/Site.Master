@@ -12,7 +12,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -20,7 +20,7 @@
     <style>
         input, textarea, select {
             max-width: unset;
-        }    
+        }
     </style>
     <form runat="server">
         <asp:ScriptManager runat="server">
@@ -49,15 +49,18 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <% if (negocio.AuthorizationManager.getInstance().isLogIn())
+                    { %>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/TickerCreation">Crear ticket</a></li>
                     </ul>
                 </div>
-            </div>
-            <div class="mx-2">
-                <button class="btn btn-danger">SALIR</button>
+                <div class="mx-2">
+                    <asp:Button ID="btnLogOut" runat="server" Text="SALIR" CssClass="btn btn-danger" OnClick="btnLogOut_Click" />
+                </div>
+                <% } %>
             </div>
         </nav>
         <div class="container body-content">

@@ -1,4 +1,5 @@
 ﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,13 @@ namespace TPCWeb_Grupo21B
         public User user;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null)
+
+            if (!AuthorizationManager.getInstance().isLogIn())
             {
                 Response.Redirect("Login.aspx", true);
             }
 
-            user = (User)Session["usuario"];
+            user = AuthorizationManager.getInstance().User;
         }
     }
 }
