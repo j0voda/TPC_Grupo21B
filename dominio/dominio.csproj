@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clasificacion.cs" />
+    <Compile Include="Estado.cs" />
     <Compile Include="Event.cs" />
+    <Compile Include="Prioridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="User.cs" />

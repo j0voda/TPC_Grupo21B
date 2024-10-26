@@ -9,15 +9,15 @@ namespace dominio
 {
     public class Ticket
     {
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public string Asunto { get; set; }
-        public string Description { get; set; }
-        public int UserId { get; set; }
-        public string EstadoId { get; set; }
+        public string Descripcion { get; set; }
+        public Int64 UserId { get; set; }
+        public Int64 ClientDocument { get; set; }
+        public Estado Estado { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public int ClasificacionId { get; set; }
-        public int PrioridadId { get; set; }
-        public Event[] Eventos { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
+        public Clasificacion Clasificacion { get; set; }
+        public Prioridad Prioridad { get; set; }
     }
 }

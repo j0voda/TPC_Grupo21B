@@ -126,7 +126,7 @@ Create Table Tickets(
 	LastUpdatedAt datetime not null,
 	ClasificacionId int not null foreign key references Clasificaciones(Id),
 	PrioridadId int not null foreign key references Prioridades(Id),
-	Descripcion nvarchar(max)
+	Descripcion nvarchar(max) not null
 )
 Go
 Insert into Tickets values (

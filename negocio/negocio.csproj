@@ -45,6 +45,7 @@
     <Compile Include="AuthorizationManager.cs" />
     <Compile Include="EventBusiness.cs" />
     <Compile Include="TicketBusiness.cs" />
+    <Compile Include="TicketMapper.cs" />
     <Compile Include="UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserMapper.cs" />

@@ -12,6 +12,7 @@ namespace TPCWeb_Grupo21B
     public partial class _Default : Page
     {
         public User user;
+        public List<Ticket> tickets;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,6 +22,12 @@ namespace TPCWeb_Grupo21B
             }
 
             user = AuthorizationManager.getInstance().User;
+
+            TicketBusiness ticketBusiness = new TicketBusiness();
+            if (user != null)
+            {
+                tickets = user.RolId != 1 ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
+            }
         }
     }
 }

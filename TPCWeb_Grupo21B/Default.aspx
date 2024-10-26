@@ -17,37 +17,29 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Asunto</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Clasificación</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Asignado</th>
+                        <th scope="col">Asignado a</th>
                         <th scope="col">Prioridad</th>
+                        <th scope="col">Creado</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Ticket de prueba</td>
-                        <td>Abierto</td>
-                        <td>Tú</td>
-                        <td>Baja</td>
-                        <td><button class="btn btn-primary btn-sm">IR A VER</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Ticket de prueba</td>
-                        <td>Abierto</td>
-                        <td>Tú</td>
-                        <td>Baja</td>
-                        <td><button class="btn btn-primary btn-sm">IR A VER</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Ticket de prueba</td>
-                        <td>Abierto</td>
-                        <td>Tú</td>
-                        <td>Baja</td>
-                        <td><button class="btn btn-primary btn-sm">IR A VER</button></td>
-                    </tr>
+                      <% foreach (var ticket in tickets) { %>
+                             <tr>
+                                 <td><%= ticket.Id %></td>
+                                 <td><%= ticket.Asunto %></td>
+                                 <td><%= ticket.Descripcion %></td>
+                                 <td><%= ticket.Clasificacion.Descripcion %></td>
+                                 <td><%= ticket.Estado.Descripcion %></td>
+                                 <td><%= ticket.UserId %></td>
+                                 <td><%= ticket.Prioridad.Descripcion %></td>
+                                 <td><%= ticket.CreatedAt %></td>
+                                 <td><button class="btn btn-primary btn-sm">Ver</button></td>
+                             </tr>
+                      <% } %>
                 </tbody>
             </table>
         </section>

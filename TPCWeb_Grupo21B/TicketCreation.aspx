@@ -17,7 +17,7 @@
                 </select>
             </div>
             <div>
-                <label class="form-label">Prioridad:</label>
+                <label class="form-label">Clasificación:</label>
                 <select class="form-select">
                     <option value="value1">Soporte ténico</option>
                     <option value="value2" selected>Soporte comercial</option>
