@@ -27,6 +27,11 @@ namespace negocio
             };
         }
 
+        public override List<User> getAll()
+        {
+            return select($"t.{idColumn}, {String.Join(" ,", columns)}, r.Descripcion as RoleDescription", " INNER JOIN Roles r ON r.Id=t.RolId");
+        }
+
         public User getOneByUserPass(string user, string pass)
         {
             List<User> result = base.select(
