@@ -11,7 +11,7 @@ namespace TPCWeb_Grupo21B
 {
 
 
-    public partial class _Default
+    public partial class AdministracionUsuarios
     {
     }
 }

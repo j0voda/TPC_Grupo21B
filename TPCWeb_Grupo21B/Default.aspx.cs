@@ -16,17 +16,19 @@ namespace TPCWeb_Grupo21B
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (!AuthorizationManager.getInstance().isLogIn())
+            var auth = AuthorizationManager.getInstance();
+
+            if (!auth.isLogIn())
             {
                 Response.Redirect("Login.aspx", true);
             }
 
-            user = AuthorizationManager.getInstance().User;
+            user = auth.User;
 
             TicketBusiness ticketBusiness = new TicketBusiness();
             if (user != null)
             {
-                tickets = user.RolId != 1 ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
+                tickets = auth.hasPermission(AuthorizationManager.PERMISSIONS.SEE_ALL_TICKETS) ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
             }
         }
     }

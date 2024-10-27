@@ -10,6 +10,7 @@ namespace dominio
 {
     public class User
     {
+
         public Int64 Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -20,6 +21,6 @@ namespace dominio
         public DateTime LastUpdatedAt { get; set; }
         public Int64 Documento { get; set; }
         public string Sexo { get; set; }
-        public Int32 RolId { get; set; }
+        public Role Rol { get; set; }
     }
 }

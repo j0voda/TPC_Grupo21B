@@ -5,7 +5,7 @@
     <main>
         <section class="row mb-4">
             <h2 id="aspnetTitle" class="fs-3">Bienvenido: <%: user.Nombres %></h2>
-            <h3 class="fs-5">Rol: <%: (user.RolId == 1 ? "Telefonista" : (user.RolId == 2 ? "Supervisor" : "Administrador")) %></h3>
+            <h3 class="fs-5">Rol: <%: user.Rol.Name %></h3>
         </section>
         <section class="mb-4">
             <a href="/TicketCreation" class="btn btn-primary">Crear nueva incidencia</a>

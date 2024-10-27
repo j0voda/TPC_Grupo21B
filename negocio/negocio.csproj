@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="AuthorizationManager.cs" />
     <Compile Include="EventBusiness.cs" />
+    <Compile Include="RoleBussiness.cs" />
+    <Compile Include="RoleMapper.cs" />
     <Compile Include="TicketBusiness.cs" />
     <Compile Include="TicketMapper.cs" />
     <Compile Include="UserBusiness.cs" />

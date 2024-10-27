@@ -28,7 +28,7 @@ namespace negocio
                 .setDateValue(obj.LastUpdatedAt)
                 .setStringValue(obj.Documento)
                 .setStringValue(obj.Sexo)
-                .setIntValue(obj.RolId)
+                .setIntValue(obj.Rol)
                 .build();
         }
 
@@ -46,7 +46,7 @@ namespace negocio
             user.LastUpdatedAt = reader.GetDateTime(7);
             user.Documento = reader.GetInt64(8);
             user.Sexo = reader.GetString(9);
-            user.RolId = reader.GetInt32(10);
+            user.Rol = new Role() { Id = (Role.ROLES)reader.GetInt32(10), Name = reader.GetString(11) };
 
             return user;
         }

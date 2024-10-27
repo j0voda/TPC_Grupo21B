@@ -30,7 +30,7 @@ namespace negocio
         public User getOneByUserPass(string user, string pass)
         {
             List<User> result = base.select(
-                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}", $" WHERE t.Username='{user}' AND t.Password='{pass}'");
+                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, r.Descripcion as RoleDescription", $" INNER JOIN Roles r ON r.Id=t.RolId WHERE t.Username='{user}' AND t.Password='{pass}'");
 
             if (result.Count == 0)
             {

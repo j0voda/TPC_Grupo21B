@@ -14,6 +14,19 @@ namespace negocio
     public class AuthorizationManager
     {
 
+        public enum PERMISSIONS
+        {
+            USER_MANAGEMENT,
+            CREATE_TICKETS,
+            SEE_ALL_TICKETS
+        }
+
+        private static Dictionary<PERMISSIONS, List<Role.ROLES>> AUTHORIZATIONS = new Dictionary<PERMISSIONS, List<Role.ROLES>> {
+            { PERMISSIONS.USER_MANAGEMENT, new List<Role.ROLES> { Role.ROLES.ADMIN } },
+            { PERMISSIONS.CREATE_TICKETS, new List<Role.ROLES> { Role.ROLES.OPERATOR } },
+            { PERMISSIONS.SEE_ALL_TICKETS, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR } },
+        };
+
         private static AuthorizationManager instance;
         private User user;
         public User User { get {
@@ -27,9 +40,10 @@ namespace negocio
             }
             var value = getSession()["usuario"];
 
-            if (value != null) {
-                user = (User)value;
+            if (value == null) {
+                return;
             }
+            user = (User)value;
         }
 
         public static AuthorizationManager getInstance()
@@ -82,6 +96,15 @@ namespace negocio
             getSession()["usuario"] = null;
 
             return;
+        }
+
+        public bool hasPermission(PERMISSIONS permission)
+        {
+            if (!AUTHORIZATIONS.ContainsKey(permission)) return false;
+
+            List<Role.ROLES> roles = AUTHORIZATIONS[permission];
+
+            return roles.Contains(User.Rol.Id);
         }
     }
 }
