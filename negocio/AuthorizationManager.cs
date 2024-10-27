@@ -100,6 +100,9 @@ namespace negocio
 
         public bool hasPermission(PERMISSIONS permission)
         {
+
+            if (!isLogIn()) return false;
+
             if (!AUTHORIZATIONS.ContainsKey(permission)) return false;
 
             List<Role.ROLES> roles = AUTHORIZATIONS[permission];
