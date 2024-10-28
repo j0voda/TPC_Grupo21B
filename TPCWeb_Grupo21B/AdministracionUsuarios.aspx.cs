@@ -13,6 +13,7 @@ namespace TPCWeb_Grupo21B
     {
 
         public List<User> users;
+        private List<Role> roles;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,6 +25,46 @@ namespace TPCWeb_Grupo21B
             var userBusiness = new UserBusiness();
 
             this.users = userBusiness.getAll();
+
+            var roleBussiness = new RoleBussiness();
+
+            this.roles = roleBussiness.getAll();
+
+            this.sltRole.DataSource = roles.Select(r => new ListItem() { Text=r.Name, Value=((int)r.Id).ToString() }).ToList();
+
+            this.sltRole.DataBind();
+        }
+
+        protected void btnSaveUser_Click(object sender, EventArgs e)
+        {
+            var mail = this.tbMail.Text.Trim();
+            var document = this.tbDocument.Text.Trim();
+            var gender = this.sltSex.Text.Trim();
+            var role = this.roles[this.sltRole.SelectedIndex];
+            
+            Random random = new Random();
+            
+            var temporalPassword = random.Next(1000, 9999).ToString();
+
+            var user = new User() { 
+                Email = mail, 
+                Documento = long.Parse(document), 
+                Sexo = gender, 
+                Rol = role, 
+                Password=temporalPassword,
+                CreatedAt = DateTime.Now,
+                LastUpdatedAt = DateTime.Now,
+                Estado = new UserState() { Id = UserState.USER_STATES.INACTIVE }
+            };
+
+            var userBussines = new UserBusiness();
+
+            var savedUser = userBussines.saveOne(user);
+
+            if (savedUser == null)
+            {
+                throw new Exception("Error al guardar el usuario");
+            }
         }
     }
 }

@@ -22,15 +22,21 @@ namespace acceso_datos
             return this;
         }
 
-        public QueryValuesBuilder setStringValue(object value) { 
-            values.Add($"'{value}'");
+        public QueryValuesBuilder setStringValue(object value) {
+
+            if (value == null) {
+                values.Add("NULL");
+            } else
+            {
+                values.Add($"'{value}'");
+            }
 
             return this;
         }
 
         public QueryValuesBuilder setDateValue(DateTime dateValue)
         {
-            return this.setStringValue(dateValue.ToString("yyyy-MM-dd"));
+            return this.setStringValue(dateValue.ToString("dd-MM-yyyy"));
         }
 
         public List<string> build() { return values; }

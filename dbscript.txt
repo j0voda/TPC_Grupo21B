@@ -54,10 +54,10 @@ Go
 
 Create Table Usuarios(
 	Id bigint not null primary key identity(1, 1),
-	Username varchar(50) not null,
+	Username varchar(50),
 	Password varchar(50) not null,
-	Nombres varchar(50) not null,
-	Apellidos varchar(50) not null,
+	Nombres varchar(50),
+	Apellidos varchar(50),
 	Email varchar(50) not null,
 	CreatedAt datetime not null,
 	LastUpdatedAt datetime not null,

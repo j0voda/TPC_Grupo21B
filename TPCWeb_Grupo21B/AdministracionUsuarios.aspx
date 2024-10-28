@@ -2,12 +2,14 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>
-        <h2>GESTIÓN DE USUARIOS</h2>
+        <h2>Gestión de usuarios</h2>
         <section class="mb-4">
-            <a href="/TicketCreation" class="btn btn-primary">Crear nueva incidencia</a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                Crear nuevo usuarios
+            </button>
         </section>
         <section class="row">
-            <h3 class="">Tus tickets:</h3>
+            <h3 class="">Usuarios existentes:</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -15,7 +17,9 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Género</th>
+                        <th scope="col">Mail</th>
                         <th scope="col">Rol</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Creado</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -28,13 +32,57 @@
                         <td><%= user.Nombres %></td>
                         <td><%= user.Apellidos %></td>
                         <td><%= user.Sexo %></td>
+                        <td><%= user.Email %></td>
                         <td><%= user.Rol.Name %></td>
+                        <td><%= user.Estado.Name %></td>
                         <td><%= user.CreatedAt.ToString("dd-MM-yyyy") %></td>
-                        <td><button class="btn btn-primary btn-sm">Ver</button></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm">Ver</button></td>
                     </tr>
                     <% } %>
                 </tbody>
             </table>
         </section>
     </main>
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="createUserModalLabel">Crear un usuario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-column gap-3 mx-auto justify-content-center">
+                        <div>
+                            <label class="form-label">Mail:</label>
+                            <asp:TextBox ID="tbMail" runat="server" CssClass="form-control" TextMode="Email"></asp:TextBox>
+                        </div>
+                        <div class="d-flex gap-3">
+                            <div class="flex-grow-1">
+                                <label class="form-label">Número de documento:</label>
+                                <asp:TextBox ID="tbDocument" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-label">Género:</label>
+                                <asp:DropDownList ID="sltSex" runat="server" CssClass="form-select">
+                                    <asp:ListItem Value="M">Masculino</asp:ListItem>
+                                    <asp:ListItem Value="F">Femenino</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Rol del nuevo usuario:</label>
+                            <asp:DropDownList ID="sltRole" runat="server" CssClass="form-select"></asp:DropDownList>
+                        </div>
+                        <p class="fs-6 fw-light">Una vez confirme se enviara un mail con el código para que el usuario termine el registro.</p>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <asp:Button ID="btnSaveUser" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnSaveUser_Click"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
