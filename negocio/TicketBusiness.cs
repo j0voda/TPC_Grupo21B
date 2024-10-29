@@ -18,15 +18,32 @@ namespace negocio
                 "UserId",
                 "ClientDocument",
                 "EstadoId",
-                "EstadoDesc",
                 "CreatedAt",
                 "LastUpdatedAt",
                 "ClasificacionId",
-                "ClasificacionDesc",
                 "PrioridadId",
-                "PrioridadDesc",
-                "PrioridadColor"
+                "Descripcion"
             };
+        }
+
+        public int insert(Ticket ticket)
+        {
+            int id = -1;
+            sqlConexion.Open();
+
+            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2});SELECT SCOPE_IDENTITY();", tableName, String.Join(" ,", columns), $"'{ticket.Asunto}', " +
+                $"{ticket.UserId}, {ticket.ClientDocument}, {ticket.Estado.Id}, '{ticket.CreatedAt}', '{ticket.LastUpdatedAt}', {ticket.Clasificacion.Id}, " +
+                $"{ticket.Prioridad.Id}, '{ticket.Descripcion}'");
+            reader = this.executeCommand(query);
+
+            if (reader.Read())
+            {
+                id = Convert.ToInt32(reader[0]);
+            }
+
+            sqlConexion.Close();
+
+            return id;
         }
 
         public override List<Ticket> getAll()
