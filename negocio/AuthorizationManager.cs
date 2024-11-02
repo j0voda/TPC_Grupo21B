@@ -71,6 +71,11 @@ namespace negocio
             return getInstance().User != null;
         }
 
+        public bool isRegitered()
+        {
+            return user.Username != null && user.Username.Length > 0;
+        }
+
         public User logIn(string username, string password) {
 
             UserBusiness userBusiness = new UserBusiness();

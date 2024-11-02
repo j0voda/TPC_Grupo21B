@@ -29,6 +29,11 @@ namespace TPCWeb_Grupo21B
             if (user != null)
             {
                 tickets = auth.hasPermission(AuthorizationManager.PERMISSIONS.SEE_ALL_TICKETS) ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
+
+                if (tickets == null)
+                {
+                    tickets = new List<Ticket>();
+                }
             }
         }
     }

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +49,7 @@
     <Compile Include="EstadoBusiness.cs" />
     <Compile Include="EstadoMapper.cs" />
     <Compile Include="EventBusiness.cs" />
+    <Compile Include="MailService.cs" />
     <Compile Include="PrioridadBussiness.cs" />
     <Compile Include="PrioridadMapper.cs" />
     <Compile Include="RoleBussiness.cs" />

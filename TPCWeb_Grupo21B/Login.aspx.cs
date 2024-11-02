@@ -66,6 +66,11 @@ namespace TPCWeb_Grupo21B
                 return;    
             }
 
+            if (u.Username == null || u.Username.Length == 0)
+            {
+                Response.Redirect("Register.aspx", true);
+            }
+
             Response.Redirect("Default.aspx");
         }
 

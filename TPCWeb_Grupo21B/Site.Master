@@ -50,16 +50,20 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <% if (negocio.AuthorizationManager.getInstance().isLogIn())
-                    { %>
+                    {
+                        if (negocio.AuthorizationManager.getInstance().isRegitered())
+                        { %>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/TicketCreation">Crear ticket</a></li>
-                        <% if (negocio.AuthorizationManager.getInstance().hasPermission(negocio.AuthorizationManager.PERMISSIONS.USER_MANAGEMENT)) { %>
-                            <li class="nav-item"><a class="nav-link" runat="server" href="~/AdministracionUsuarios.aspx">Gestion de usuarios</a></li>
+                        <% if (negocio.AuthorizationManager.getInstance().hasPermission(negocio.AuthorizationManager.PERMISSIONS.USER_MANAGEMENT))
+                            { %>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/AdministracionUsuarios.aspx">Gestion de usuarios</a></li>
                         <% } %>
                     </ul>
                 </div>
+                <% } %>
                 <div class="mx-2">
                     <asp:Button ID="btnLogOut" runat="server" Text="SALIR" CssClass="btn btn-danger" OnClick="btnLogOut_Click" />
                 </div>

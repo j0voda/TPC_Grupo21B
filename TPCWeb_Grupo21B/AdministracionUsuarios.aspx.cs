@@ -61,10 +61,18 @@ namespace TPCWeb_Grupo21B
 
             var savedUser = userBussines.saveOne(user);
 
-            if (savedUser == null)
+            if (savedUser == -1)
             {
                 throw new Exception("Error al guardar el usuario");
             }
+
+            MailService.sendMail(
+                mail, 
+                "Usuario", 
+                "Termina tu registro",
+                $"Intenta iniciar sesión en la pantalla principal con esta contraseña temporal para terminar tu proceso de registro: {temporalPassword}. \n Por seguridad no compartas tu contraseña con nadie."
+            );
+
         }
     }
 }

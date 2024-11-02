@@ -70,7 +70,7 @@ namespace negocio
                 $"t.CreatedAt, t.LastUpdatedAt, c.Id as ClasificacionId, c.Descripcion as ClasificacionDesc, p.Id as PrioridadId, p.Descripcion as PrioridadDesc, p.Color as PrioridadColor",
                 $"INNER JOIN Estados e on t.EstadoId = e.Id " +
                 $"INNER JOIN Clasificaciones c on t.ClasificacionId = c.Id " +
-                $"INNER JOIN Prioridades p on t.PrioridadId = p.Id" +
+                $"INNER JOIN Prioridades p on t.PrioridadId = p.Id " +
                 $"WHERE t.UserId = {userId}");
 
             if (result.Count == 0)
