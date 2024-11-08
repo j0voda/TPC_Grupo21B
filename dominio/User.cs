@@ -22,7 +22,6 @@ namespace dominio
         public Int64 Documento { get; set; }
         public string Sexo { get; set; }
         public Role Rol { get; set; }
-
-        public UserState Estado { get; set; }
+        //public UserState Estado { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace TPCWeb_Grupo21B
                 Password=temporalPassword,
                 CreatedAt = DateTime.Now,
                 LastUpdatedAt = DateTime.Now,
-                Estado = new UserState() { Id = UserState.USER_STATES.INACTIVE }
+                //Estado = new UserState() { Id = UserState.USER_STATES.INACTIVE }
             };
 
             var userBussines = new UserBusiness();

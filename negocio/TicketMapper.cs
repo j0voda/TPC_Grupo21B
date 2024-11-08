@@ -19,16 +19,15 @@ namespace negocio
         public List<string> mapFromObject(Ticket obj)
         {
             return new QueryValuesBuilder()
-                //.setStringValue(obj.Username)
-                //.setStringValue(obj.Password)
-                //.setStringValue(obj.Nombres)
-                //.setStringValue(obj.Apellidos)
-                //.setStringValue(obj.Email)
-                //.setDateValue(obj.CreatedAt)
-                //.setDateValue(obj.LastUpdatedAt)
-                //.setStringValue(obj.Documento)
-                //.setStringValue(obj.Sexo)
-                //.setIntValue(obj.RolId)
+                .setStringValue(obj.Asunto)
+                .setStringValue(obj.Descripcion)
+                .setIntValue(obj.UserId)
+                .setStringValue(obj.ClientDocument)
+                .setIntValue(obj.Estado.Id)
+                .setDateValue(obj.CreatedAt)
+                .setDateValue(obj.LastUpdatedAt)
+                .setIntValue(obj.Clasificacion.Id)
+                .setIntValue(obj.Prioridad.Id)
                 .build();
         }
 

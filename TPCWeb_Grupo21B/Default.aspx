@@ -27,22 +27,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                      <% foreach (var ticket in tickets) { %>
-                             <tr>
-                                 <td><%= ticket.Id %></td>
-                                 <td><%= ticket.Asunto %></td>
-                                 <td><%= ticket.Descripcion %></td>
-                                 <td><%= ticket.Clasificacion.Descripcion %></td>
-                                 <td><%= ticket.Estado.Descripcion %></td>
-                                 <td><%= ticket.UserId %></td>
-                                 <td><%= ticket.Prioridad.Descripcion %></td>
-                                 <td><%= ticket.CreatedAt %></td>
-                                 <td><button class="btn btn-primary btn-sm">Ver</button></td>
-                             </tr>
-                      <% } %>
+                    <asp:Repeater runat="server" ID="rptTickets">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("Id") %></td>
+                                <td><%# Eval("Asunto") %></td>
+                                <td><%# Eval("Descripcion") %></td>
+                                <td><%# Eval("Clasificacion.Descripcion") %></td>
+                                <td><%# Eval("Estado.Descripcion") %></td>
+                                <td><%# Eval("UserId") %></td>
+                                <td><%# Eval("Prioridad.Descripcion") %></td>
+                                <td><%# Eval("CreatedAt") %></td>
+                                <td><asp:Button ID="btnVerClick" runat="server" Text="Ver" class="btn btn-primary btn-sm" CommandName="VerInfo" CommandArgument='<%# Eval("Id") %>' OnCommand="btnVerClick_Command"/> </td>
+                                <%--<td><button class="btn btn-primary btn-sm">Ver</button></td>--%>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                      
                 </tbody>
             </table>
         </section>
     </main>
 
 </asp:Content>
+
+<%--<% foreach (var ticket in tickets) { %>
+       <tr>
+           <td><%= ticket.Id %></td>
+           <td><%= ticket.Asunto %></td>
+           <td><%= ticket.Descripcion %></td>
+           <td><%= ticket.Clasificacion.Descripcion %></td>
+           <td><%= ticket.Estado.Descripcion %></td>
+           <td><%= ticket.UserId %></td>
+           <td><%= ticket.Prioridad.Descripcion %></td>
+           <td><%= ticket.CreatedAt %></td>
+           <td><asp:Button ID="btnVer" runat="server" Text="Ver" class="btn btn-primary btn-sm" CommandArgument="<%= ticket.Id %>" OnClick="btnVer_Click"/> </td>
+           <td><button class="btn btn-primary btn-sm">Ver</button></td>
+       </tr>
+<% } %>--%>

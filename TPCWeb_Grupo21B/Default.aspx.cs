@@ -34,7 +34,25 @@ namespace TPCWeb_Grupo21B
                 {
                     tickets = new List<Ticket>();
                 }
+
+                rptTickets.DataSource = tickets;
+                rptTickets.DataBind();
             }
+        }
+
+        protected void btnVer_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string ticketId = btn.CommandArgument.ToString();
+            ticketId = ticketId.Trim();
+        }
+
+        protected void btnVerClick_Command(object sender, CommandEventArgs e)
+        {
+            Button btn = (Button)sender;
+            string ticketId = btn.CommandArgument.ToString();
+
+            Response.Redirect("/Ticket?ticketId=" + ticketId);
         }
     }
 }

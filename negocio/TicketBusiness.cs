@@ -15,6 +15,7 @@ namespace negocio
         {
             this.columns = new List<string> {
                 "Asunto",
+                "Descripcion",
                 "UserId",
                 "ClientDocument",
                 "EstadoId",
@@ -22,7 +23,6 @@ namespace negocio
                 "LastUpdatedAt",
                 "ClasificacionId",
                 "PrioridadId",
-                "Descripcion"
             };
         }
 
@@ -116,9 +116,11 @@ namespace negocio
         public Ticket getOne(int ticketId)
         {
             List<Ticket> result = base.select(
-                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}", $"INNER JOIN Estados e on t.EstadoId = e.Id " +
+                $"t.Id, t.Asunto, t.Descripcion, t.UserId, t.ClientDocument, e.Id as EstadoId, e.Descripcion as EstadoDesc, " +
+                $"t.CreatedAt, t.LastUpdatedAt, c.Id as ClasificacionId, c.Descripcion as ClasificacionDesc, p.Id as PrioridadId, p.Descripcion as PrioridadDesc, p.Color as PrioridadColor",
+                $"INNER JOIN Estados e on t.EstadoId = e.Id " +
                 $"INNER JOIN Clasificaciones c on t.ClasificacionId = c.Id " +
-                $"INNER JOIN Prioridades p on t.PrioridadId = p.Id" +
+                $"INNER JOIN Prioridades p on t.PrioridadId = p.Id " +
                 $"WHERE t.Id = {ticketId}");
 
             if (result.Count == 0)
