@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Security;
 using System.Web.SessionState;
 using static System.Collections.Specialized.BitVector32;
 
@@ -18,13 +19,15 @@ namespace negocio
         {
             USER_MANAGEMENT,
             CREATE_TICKETS,
-            SEE_ALL_TICKETS
+            SEE_ALL_TICKETS,
+            CLIENT_MANAGENT
         }
 
         private static Dictionary<PERMISSIONS, List<Role.ROLES>> AUTHORIZATIONS = new Dictionary<PERMISSIONS, List<Role.ROLES>> {
             { PERMISSIONS.USER_MANAGEMENT, new List<Role.ROLES> { Role.ROLES.ADMIN } },
             { PERMISSIONS.CREATE_TICKETS, new List<Role.ROLES> { Role.ROLES.OPERATOR } },
             { PERMISSIONS.SEE_ALL_TICKETS, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR } },
+            { PERMISSIONS.CLIENT_MANAGENT, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR, Role.ROLES.OPERATOR } }
         };
 
         private static AuthorizationManager instance;

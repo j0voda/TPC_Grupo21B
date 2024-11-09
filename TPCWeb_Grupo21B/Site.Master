@@ -60,12 +60,16 @@
                         <% if (negocio.AuthorizationManager.getInstance().hasPermission(negocio.AuthorizationManager.PERMISSIONS.USER_MANAGEMENT))
                             { %>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/AdministracionUsuarios.aspx">Gestion de usuarios</a></li>
+                        <% } %>                        
+                        <% if (negocio.AuthorizationManager.getInstance().hasPermission(negocio.AuthorizationManager.PERMISSIONS.CLIENT_MANAGENT))
+                            { %>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/AdministracionClientes.aspx">Gestion de clientes</a></li>
                         <% } %>
                     </ul>
                 </div>
                 <% } %>
                 <div class="mx-2">
-                    <asp:Button ID="btnLogOut" runat="server" Text="SALIR" CssClass="btn btn-danger" OnClick="btnLogOut_Click" />
+                    <asp:Button ID="btnLogOut" runat="server" Text="SALIR" CssClass="btn btn-danger" OnClick="btnLogOut_Click" UseSubmitBehavior="false" />
                 </div>
                 <% } %>
             </div>

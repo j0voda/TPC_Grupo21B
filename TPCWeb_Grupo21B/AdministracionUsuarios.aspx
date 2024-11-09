@@ -19,7 +19,7 @@
                         <th scope="col">Género</th>
                         <th scope="col">Mail</th>
                         <th scope="col">Rol</th>
-                        <th scope="col">Estado</th>
+                        <%--<th scope="col">Estado</th>--%>
                         <th scope="col">Creado</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -34,7 +34,7 @@
                         <td><%= user.Sexo %></td>
                         <td><%= user.Email %></td>
                         <td><%= user.Rol.Name %></td>
-                        <td><%= user.Estado.Name %></td>
+                        <%--<td><%= user.Estado.Name %></td>--%>
                         <td><%= user.CreatedAt.ToString("dd-MM-yyyy") %></td>
                         <td>
                             <button class="btn btn-primary btn-sm">Ver</button></td>

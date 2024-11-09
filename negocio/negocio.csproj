@@ -46,6 +46,8 @@
     <Compile Include="AuthorizationManager.cs" />
     <Compile Include="ClasificacionBussiness.cs" />
     <Compile Include="ClasificacionMapper.cs" />
+    <Compile Include="ClientBussiness.cs" />
+    <Compile Include="ClientMapper.cs" />
     <Compile Include="EstadoBusiness.cs" />
     <Compile Include="EstadoMapper.cs" />
     <Compile Include="EventBusiness.cs" />
@@ -59,7 +61,7 @@
     <Compile Include="UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserMapper.cs" />
-    <Compile Include="Validators.cs" />
+    <Compile Include="UtilValidators.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\acceso-datos\acceso_datos.csproj">

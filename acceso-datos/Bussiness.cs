@@ -17,17 +17,19 @@ namespace acceso_datos
         public SqlConnection sqlConexion = new SqlConnection();
         public SqlDataReader reader;
         private IDBMapper<T> mapper;
+        private bool idAuto;
 
-        public Bussiness(string tableName, string idColumn, IDBMapper<T> mapper)
+        public Bussiness(string tableName, string idColumn, IDBMapper<T> mapper, bool? idAuto = false)
         {
             this.idColumn = idColumn;
             this.mapper = mapper;
             this.tableName = tableName;
+            this.idAuto = (bool)(idAuto != null ? idAuto : false);
 
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
-                DataSource = ".\\SQLEXPRESS",
-                //DataSource = "localhost",
+                //DataSource = ".\\SQLEXPRESS",
+                DataSource = "localhost",
                 InitialCatalog = "TPC_CALLCENTER",
                 IntegratedSecurity = true
             };
@@ -79,10 +81,17 @@ namespace acceso_datos
             int id = -1;
             sqlConexion.Open();
 
-            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2});SELECT SCOPE_IDENTITY();", tableName, String.Join(" ,", columns), values);
+            var insertColumns = String.Join(",", columns);
+
+            if (!idAuto)
+            {
+                insertColumns = this.idColumn + "," + insertColumns;
+            }
+
+            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2});SELECT SCOPE_IDENTITY();", tableName, insertColumns, values);
             reader = this.executeCommand(query);
 
-            if (reader.Read()) { 
+            if (idAuto && reader.Read()) { 
                 id = Convert.ToInt32(reader[0]);
             }
 
@@ -136,6 +145,11 @@ namespace acceso_datos
         public void updateOne(T item)
         {
             List<string> values = this.mapper.mapFromObject(item);
+
+            if (!idAuto)
+            {
+                values.RemoveAt(0);
+            }
 
             List<string> sets = new List<string>();
 

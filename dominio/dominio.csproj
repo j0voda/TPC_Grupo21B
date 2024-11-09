@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clasificacion.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Estado.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Prioridad.cs" />
