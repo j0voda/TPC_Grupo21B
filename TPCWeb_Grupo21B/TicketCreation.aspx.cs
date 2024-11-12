@@ -13,6 +13,8 @@ namespace TPCWeb_Grupo21B.Screens
     {
         public List<Clasificacion> clasificaciones;
         public List<Prioridad> prioridades;
+        private List<Client> clients;
+        private Client selectedClient;
         public User user;
         public dominio.Ticket ticket;
         protected void Page_Load(object sender, EventArgs e)
@@ -23,6 +25,8 @@ namespace TPCWeb_Grupo21B.Screens
                 Response.Redirect("Login.aspx", true);
             }
             user = auth.User;
+
+            loadClients();
 
             if (!IsPostBack)
             {
@@ -47,6 +51,21 @@ namespace TPCWeb_Grupo21B.Screens
             }
         }
 
+        private void loadClients()
+        {
+            var clientsB = new ClientBussiness();
+
+            clients = clientsB.getAll();
+
+            this.ddCliente.DataSource = clients
+                .Where(c =>
+                {
+                    var q = this.txtCliente.Text;
+
+                    return c.ToString().Contains(q);
+                });
+            this.ddCliente.DataBind();
+        }
         protected void prioSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -64,7 +83,7 @@ namespace TPCWeb_Grupo21B.Screens
 
         protected void txtCliente_TextChanged(object sender, EventArgs e)
         {
-
+            loadClients();
         }
 
         protected void txtDescripcion_TextChanged(object sender, EventArgs e)
@@ -105,5 +124,6 @@ namespace TPCWeb_Grupo21B.Screens
 
             Response.Redirect("/Default");
         }
+
     }
 }

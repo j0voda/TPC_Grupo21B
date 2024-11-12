@@ -10,14 +10,13 @@
         <h2>Gestión de clientes</h2>
         <section class="mb-4">
             <button type="button" class="hidden" hidden id="btn-modal-open" data-bs-toggle="modal" data-bs-target="#createUserModal"></button>
-            <asp:Button 
-                ID="btnNewClient" 
-                runat="server" 
+            <asp:Button
+                ID="btnNewClient"
+                runat="server"
                 Text="Crear nuevo cliente"
                 UseSubmitBehavior="false"
                 CssClass="btn btn-primary"
-                OnClick="btnNewClient_Click"
-            />
+                OnClick="btnNewClient_Click" />
         </section>
         <section class="row">
             <h3 class="">Clientes existentes:</h3>
@@ -46,8 +45,7 @@
                                         Text="Editar"
                                         CssClass="btn btn-primary btn-sm"
                                         UseSubmitBehavior="false"
-                                        CommandArgument='<%# Eval("Document") %>'
-                                        />
+                                        CommandArgument='<%# Eval("Document") %>' />
                                 </td>
                             </tr>
                         </ItemTemplate>
@@ -83,7 +81,10 @@
                             <label class="form-label">Mail:</label>
                             <asp:TextBox ID="tbMail" runat="server" CssClass="form-control" TextMode="Email" required="true"></asp:TextBox>
                         </div>
+                        <% if (SelectedClient == null)
+                            { %>
                         <p class="fs-6 fw-light">Una vez dado de alta le llegara un mail informado al cliente.</p>
+                        <% } %>
                         <asp:Label ID="lbError" runat="server" Text=""></asp:Label>
                     </div>
                 </div>

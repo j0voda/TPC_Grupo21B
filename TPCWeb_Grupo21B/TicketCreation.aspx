@@ -1,6 +1,31 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TicketCreation.aspx.cs" Inherits="TPCWeb_Grupo21B.Screens.TicketCreation" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const select = document.querySelector("#client-combo > select");
+            const text = document.querySelector("#client-combo > input");
+
+            let open = false;
+
+            select.addEventListener("click", (e) => {
+                if (!open) {
+                    open = true;
+                } else {
+                    console.log(e.target.selectedOptions[0]);
+                    const option = e.target.selectedOptions[0];
+
+                    if (!option) return;
+
+                    text.value = option.value;
+                }
+            })
+
+            select.addEventListener("blur", () => {
+                open = false;
+            })
+        });
+    </script>
     <main>
         <h2>NUEVO TICKET:</h2>
         <div class="d-flex flex-column gap-3 w-25 mx-auto justify-content-center">
@@ -10,7 +35,10 @@
             </div>
             <div>
                 <label class="form-label">Nro Cliente:</label>
-                <asp:TextBox ID="txtCliente" runat="server" class="form-control" OnTextChanged="txtCliente_TextChanged"></asp:TextBox>
+                <div id="client-combo">
+                    <asp:TextBox ID="txtCliente" runat="server" class="form-control border-bottom-0 rounded-top rounded-0" OnTextChanged="txtCliente_TextChanged" AutoPostBack="true"></asp:TextBox>
+                    <asp:DropDownList ID="ddCliente" runat="server" SkinID="client-select-combo" CssClass="form-select rounded-bottom rounded-0"></asp:DropDownList>
+                </div>
             </div>
             <div>
                 <label class="form-label">Clasificación:</label>
