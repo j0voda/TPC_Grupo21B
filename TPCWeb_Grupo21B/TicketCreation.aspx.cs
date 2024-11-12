@@ -17,34 +17,35 @@ namespace TPCWeb_Grupo21B.Screens
         public dominio.Ticket ticket;
         protected void Page_Load(object sender, EventArgs e)
         {
+            loadData();
+
+            if (IsPostBack) return;
+
             var auth = AuthorizationManager.getInstance();
             if (!auth.isLogIn())
             {
                 Response.Redirect("Login.aspx", true);
             }
             user = auth.User;
+        }
 
-            if (!IsPostBack)
-            {
-                ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
-                PrioridadBussiness prioBusiness = new PrioridadBussiness();
+        private void loadData()
+        {
+            ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
+            PrioridadBussiness prioBusiness = new PrioridadBussiness();
 
-                if (user != null)
-                {
-                    clasificaciones = clasBusiness.getAll();
-                    prioridades = prioBusiness.getAll();
+            clasificaciones = clasBusiness.getAll();
+            prioridades = prioBusiness.getAll();
 
-                    this.prioSelect.DataSource = prioridades;
-                    this.prioSelect.DataValueField = "Id";
-                    this.prioSelect.DataTextField = "Descripcion";
-                    this.prioSelect.DataBind();
+            this.prioSelect.DataSource = prioridades;
+            this.prioSelect.DataValueField = "Id";
+            this.prioSelect.DataTextField = "Descripcion";
+            this.prioSelect.DataBind();
 
-                    this.clasSelect.DataSource = clasificaciones;
-                    this.clasSelect.DataValueField = "Id";
-                    this.clasSelect.DataTextField = "Descripcion";
-                    this.clasSelect.DataBind();
-                }
-            }
+            this.clasSelect.DataSource = clasificaciones;
+            this.clasSelect.DataValueField = "Id";
+            this.clasSelect.DataTextField = "Descripcion";
+            this.clasSelect.DataBind();
         }
 
         protected void prioSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -104,6 +105,44 @@ namespace TPCWeb_Grupo21B.Screens
             }
 
             Response.Redirect("/Default");
+        }
+
+        protected void btnNewClasification_Click(object sender, EventArgs e)
+        {
+            this.txtClasDesc.Text = "";
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallOpenModal", "ClickOpenModalClas()", true);
+        }
+
+        protected void btnSaveClasif_Click(object sender, EventArgs e)
+        {
+            ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
+            Clasificacion clas = new Clasificacion();
+            clas.Descripcion = this.txtClasDesc.Text;
+
+            clasBusiness.saveOne(clas);
+
+            loadData();
+        }
+
+        protected void btnSavePrio_Click(object sender, EventArgs e)
+        {
+            PrioridadBussiness prioBusiness = new PrioridadBussiness();
+            Prioridad prio = new Prioridad();
+            prio.Descripcion = this.txtPrioDesc.Text;
+            prio.Color = this.txtPrioColor.Text;
+
+            prioBusiness.saveOne(prio);
+
+            loadData();
+        }
+
+        protected void btnNewPriority_Click(object sender, EventArgs e)
+        {
+            this.txtPrioDesc.Text = "";
+            this.txtPrioColor.Text = "";
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallOpenModal", "ClickOpenModalPrio()", true);
         }
     }
 }

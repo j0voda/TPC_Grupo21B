@@ -15,7 +15,10 @@ namespace negocio
 
         public List<string> mapFromObject(Prioridad obj)
         {
-            throw new NotImplementedException();
+            return new QueryValuesBuilder()
+                .setStringValue(obj.Descripcion)
+                .setStringValue(obj.Color)
+                .build();
         }
 
         public Prioridad mapToObject(SqlDataReader reader)

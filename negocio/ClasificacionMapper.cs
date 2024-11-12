@@ -15,7 +15,9 @@ namespace negocio
 
         public List<string> mapFromObject(Clasificacion obj)
         {
-            throw new NotImplementedException();
+            return new QueryValuesBuilder()
+                .setStringValue(obj.Descripcion)
+                .build();
         }
 
         public Clasificacion mapToObject(SqlDataReader reader)

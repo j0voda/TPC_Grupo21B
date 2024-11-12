@@ -16,7 +16,7 @@ namespace acceso_datos
         public List<string> columns;
         public SqlConnection sqlConexion = new SqlConnection();
         public SqlDataReader reader;
-        private IDBMapper<T> mapper;
+        public IDBMapper<T> mapper;
         private bool idAuto;
 
         public Bussiness(string tableName, string idColumn, IDBMapper<T> mapper, bool? idAuto = false)
@@ -28,8 +28,8 @@ namespace acceso_datos
 
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
-                //DataSource = ".\\SQLEXPRESS",
-                DataSource = "localhost",
+                DataSource = ".\\SQLEXPRESS",
+                //DataSource = "localhost",
                 InitialCatalog = "TPC_CALLCENTER",
                 IntegratedSecurity = true
             };
