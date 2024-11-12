@@ -18,6 +18,10 @@
                     if (!option) return;
 
                     text.value = option.value;
+
+                    const event = new Event('change');
+
+                    text.dispatchEvent(event);
                 }
             })
 

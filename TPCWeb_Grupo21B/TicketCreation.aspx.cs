@@ -85,6 +85,14 @@ namespace TPCWeb_Grupo21B.Screens
         protected void txtCliente_TextChanged(object sender, EventArgs e)
         {
             loadClients();
+
+            if (ddCliente.Items.FindByText(txtCliente.Text) == null)
+            {
+                this.btnCrear.Enabled = false;
+            } else
+            {
+                this.btnCrear.Enabled = true;
+            }
         }
 
         protected void txtDescripcion_TextChanged(object sender, EventArgs e)
@@ -94,10 +102,13 @@ namespace TPCWeb_Grupo21B.Screens
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
+
+            var doc = txtCliente.Text.Split(',')[0];
+
             // TODO: Validators
             ticket = new dominio.Ticket();
             ticket.Asunto = txtAsunto.Text;
-            ticket.ClientDocument = Int64.Parse(txtCliente.Text);
+            ticket.ClientDocument = Int64.Parse(doc);
             ticket.UserId = user.Id;
             
             ticket.Estado = new Estado();

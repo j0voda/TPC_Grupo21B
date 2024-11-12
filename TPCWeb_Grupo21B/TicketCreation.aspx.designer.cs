@@ -51,16 +51,16 @@ namespace TPCWeb_Grupo21B.Screens
         protected global::System.Web.UI.WebControls.DropDownList clasSelect;
 
         /// <summary>
-        /// btnNewClasification control.
+        /// Control btnNewClasification.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnNewClasification;
 
         /// <summary>
-        /// prioSelect control.
+        /// Control prioSelect.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -69,16 +69,16 @@ namespace TPCWeb_Grupo21B.Screens
         protected global::System.Web.UI.WebControls.DropDownList prioSelect;
 
         /// <summary>
-        /// btnNewPriority control.
+        /// Control btnNewPriority.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnNewPriority;
 
         /// <summary>
-        /// txtDescripcion control.
+        /// Control txtDescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -96,65 +96,65 @@ namespace TPCWeb_Grupo21B.Screens
         protected global::System.Web.UI.WebControls.Button btnCrear;
 
         /// <summary>
-        /// txtClasDesc control.
+        /// Control txtClasDesc.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtClasDesc;
 
         /// <summary>
-        /// lbErrorClas control.
+        /// Control lbErrorClas.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbErrorClas;
 
         /// <summary>
-        /// btnSaveClasif control.
+        /// Control btnSaveClasif.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveClasif;
 
         /// <summary>
-        /// txtPrioDesc control.
+        /// Control txtPrioDesc.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPrioDesc;
 
         /// <summary>
-        /// txtPrioColor control.
+        /// Control txtPrioColor.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPrioColor;
 
         /// <summary>
-        /// lbErrorPrio control.
+        /// Control lbErrorPrio.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbErrorPrio;
 
         /// <summary>
-        /// btnSavePrio control.
+        /// Control btnSavePrio.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSavePrio;
     }
