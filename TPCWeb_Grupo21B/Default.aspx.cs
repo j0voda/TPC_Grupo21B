@@ -14,10 +14,11 @@ namespace TPCWeb_Grupo21B
         public User user;
         public List<Ticket> tickets;
         public List<User> users;
-
+        public List<Estado> estados;
+        public List<Clasificacion> clasificaciones;
+        public List<Prioridad> prioridades;
         protected void Page_Load(object sender, EventArgs e)
         {
-
             var auth = AuthorizationManager.getInstance();
 
             if (!auth.isLogIn())
@@ -26,24 +27,63 @@ namespace TPCWeb_Grupo21B
             }
 
             user = auth.User;
-
-            TicketBusiness ticketBusiness = new TicketBusiness();
-            if (user != null)
+            
+            if(!Page.IsPostBack)
             {
-                tickets = auth.hasPermission(AuthorizationManager.PERMISSIONS.SEE_ALL_TICKETS) ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
 
-                if (tickets == null)
+                loadData();
+
+                TicketBusiness ticketBusiness = new TicketBusiness();
+                if (user != null)
                 {
-                    tickets = new List<Ticket>();
+                    tickets = auth.hasPermission(AuthorizationManager.PERMISSIONS.SEE_ALL_TICKETS) ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
+
+                    if (tickets == null)
+                    {
+                        tickets = new List<Ticket>();
+                    }
+
+                    var userB = new UserBusiness();
+
+                    users = userB.getAll();
+
+                    rptTickets.DataSource = tickets;
+                    rptTickets.DataBind();
                 }
-
-                var userB = new UserBusiness();
-
-                users = userB.getAll();
-
-                rptTickets.DataSource = tickets;
-                rptTickets.DataBind();
             }
+
+        }
+
+        private void loadData()
+        {
+            ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
+            PrioridadBussiness prioBusiness = new PrioridadBussiness();
+            EstadoBussiness estBusiness = new EstadoBussiness();
+
+            clasificaciones = clasBusiness.getAll();
+            prioridades = prioBusiness.getAll();
+            estados = estBusiness.getAll();
+
+            this.ddlFltPrio.DataSource = prioridades;
+            this.ddlFltPrio.DataValueField = "Id";
+            this.ddlFltPrio.DataTextField = "Descripcion";
+            this.ddlFltPrio.DataBind();
+            // Agregar el ítem de valor por defecto al inicio de la lista
+            ddlFltPrio.Items.Insert(0, new ListItem("Todos", "-1"));
+
+            this.ddlFltClas.DataSource = clasificaciones;
+            this.ddlFltClas.DataValueField = "Id";
+            this.ddlFltClas.DataTextField = "Descripcion";
+            this.ddlFltClas.DataBind();
+            // Agregar el ítem de valor por defecto al inicio de la lista
+            ddlFltClas.Items.Insert(0, new ListItem("Todos", "-1"));
+
+            this.ddlFltEst.DataSource = estados;
+            this.ddlFltEst.DataValueField = "Id";
+            this.ddlFltEst.DataTextField = "Descripcion";
+            this.ddlFltEst.DataBind();
+            // Agregar el ítem de valor por defecto al inicio de la lista
+            ddlFltEst.Items.Insert(0, new ListItem("Todos", "-1"));
         }
 
         protected void btnVer_Click(object sender, EventArgs e)
@@ -63,8 +103,47 @@ namespace TPCWeb_Grupo21B
 
         public string getUserName(long userId)
         {
+            var userB = new UserBusiness();
+            users = userB.getAll();
+
             var us = this.users.Find(u => u.Id == (long)Eval("UserId"));
             return $"{us.Apellidos}, {us.Nombres}";
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            TicketBusiness ticketBusiness = new TicketBusiness();
+            var auth = AuthorizationManager.getInstance();
+
+            int clasFilter = Convert.ToInt32(this.ddlFltClas.SelectedItem.Value);
+            int estFilter = Convert.ToInt32(this.ddlFltEst.SelectedItem.Value);
+            int prioFilter = Convert.ToInt32(this.ddlFltPrio.SelectedItem.Value);
+            int idFilter = Convert.ToInt32(this.txtFltId.Text);
+
+            tickets = auth.hasPermission(AuthorizationManager.PERMISSIONS.SEE_ALL_TICKETS) ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
+
+            if(idFilter >= 0)
+            {
+                tickets.RemoveAll(t => t.Id != idFilter);
+            }
+
+            if (clasFilter >= 0)
+            {
+                tickets.RemoveAll(t => t.Clasificacion.Id != clasFilter);
+            }
+
+            if (estFilter >= 0)
+            {
+                tickets.RemoveAll(t => t.Estado.Id != estFilter);
+            }
+
+            if (prioFilter >= 0)
+            {
+                tickets.RemoveAll(t => t.Prioridad.Id != prioFilter);
+            }
+
+            rptTickets.DataSource = tickets;
+            rptTickets.DataBind();
         }
     }
 }

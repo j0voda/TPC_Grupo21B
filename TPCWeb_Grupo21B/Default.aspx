@@ -11,6 +11,30 @@
             <a href="/TicketCreation" class="btn btn-primary">Crear nueva incidencia</a>
         </section>
         <section class="row">
+            <div class="row">
+                <div class="col-1">
+                    <p>Filtrar por: </p> 
+                </div>
+                <div class="col-2">
+                    <p>ID</p>
+                    <asp:TextBox ID="txtFltId" runat="server" AutoPostBack="false" TextMode="Number" CssClass="form-select"></asp:TextBox>
+                </div>
+                <div class="col-2">
+                    <p>Estado</p>
+                    <asp:DropDownList ID="ddlFltEst" runat="server" AutoPostBack="false" CssClass="form-select"></asp:DropDownList>
+                </div>
+                <div class="col-2">
+                    <p>Prioridad</p>
+                    <asp:DropDownList ID="ddlFltPrio" runat="server" AutoPostBack="false" CssClass="form-select"></asp:DropDownList>
+                </div>
+                <div class="col-2">
+                    <p>Clasificación</p>
+                    <asp:DropDownList ID="ddlFltClas" runat="server" AutoPostBack="false" CssClass="form-select"></asp:DropDownList>
+                </div>
+                <div class="col-1">
+                    <asp:Button ID="btnFiltrar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnFiltrar_Click"/>
+                </div>
+            </div>
             <h3 class="">Tus tickets:</h3>
             <table class="table">
                 <thead>
