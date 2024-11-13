@@ -15,15 +15,6 @@ namespace TPCWeb_Grupo21B.Screens
     {
 
         /// <summary>
-        /// Control txtAsunto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAsunto;
-
-        /// <summary>
         /// Control userSelect.
         /// </summary>
         /// <remarks>
@@ -31,15 +22,6 @@ namespace TPCWeb_Grupo21B.Screens
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList userSelect;
-
-        /// <summary>
-        /// Control txtCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCliente;
 
         /// <summary>
         /// Control clasSelect.

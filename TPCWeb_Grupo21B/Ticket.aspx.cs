@@ -17,6 +17,7 @@ namespace TPCWeb_Grupo21B.Screens
         public List<User> users;
         public User user;
         public dominio.Ticket ticketM;
+        public Client Client;
         protected void Page_Load(object sender, EventArgs e)
         {
             var auth = AuthorizationManager.getInstance();
@@ -37,6 +38,7 @@ namespace TPCWeb_Grupo21B.Screens
                     ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
                     PrioridadBussiness prioBusiness = new PrioridadBussiness();
                     UserBusiness userBusiness = new UserBusiness();
+                    ClientBussiness clientBussiness = new ClientBussiness();
 
                     if (ticketM != null)
                     {
@@ -62,9 +64,14 @@ namespace TPCWeb_Grupo21B.Screens
                         this.userSelect.SelectedValue = ticketM.UserId.ToString();
                         this.userSelect.DataBind();
 
-                        this.txtAsunto.Text = ticketM.Asunto;
-                        this.txtCliente.Text = ticketM.ClientDocument.ToString();
+                        if (!auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
+                        {
+                            this.userSelect.Enabled = false;
+                        }
+
                         this.txtDescripcion.Text = ticketM.Descripcion;
+
+                        Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
                     }
                 }
             }
@@ -91,8 +98,20 @@ namespace TPCWeb_Grupo21B.Screens
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
             ticket.LastUpdatedAt = DateTime.Now;
 
-            // Guardado en db
             TicketBusiness tcktBus = new TicketBusiness();
+
+            // Reviso si requiere un cambio de estado
+            var originalTicket = tcktBus.getOne(Convert.ToInt32(ticket.Id));
+            
+            if (originalTicket.UserId != ticket.UserId)
+            {
+                ticket.Estado = new Estado
+                {
+                    Id = (int)Estado.STATES_CODES.ASSIGNED
+                };
+            }
+
+            // Guardado en db
             tcktBus.updateOne(ticket);
 
             Response.Redirect("/Default");
@@ -125,34 +144,6 @@ namespace TPCWeb_Grupo21B.Screens
             int clasIndex = Convert.ToInt32(clasSelect.SelectedValue);
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
             ticket.Clasificacion.Id = clasIndex;
-            Session["ticket"] = ticket;
-        }
-
-        protected void txtCliente_TextChanged(object sender, EventArgs e)
-        {
-            string txtclient = txtCliente.Text;
-            if (string.IsNullOrEmpty(txtclient))
-            {
-                return;
-                // TODO: label de error
-            }
-
-            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.ClientDocument = Convert.ToInt64(txtclient);
-            Session["ticket"] = ticket;
-        }
-
-        protected void txtAsunto_TextChanged(object sender, EventArgs e)
-        {
-            string txtasunto = txtAsunto.Text;
-            if (string.IsNullOrEmpty(txtasunto))
-            {
-                return;
-                // TODO: label de error
-            }
-
-            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.Asunto = txtasunto;
             Session["ticket"] = ticket;
         }
 

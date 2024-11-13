@@ -20,14 +20,16 @@ namespace negocio
             USER_MANAGEMENT,
             CREATE_TICKETS,
             SEE_ALL_TICKETS,
-            CLIENT_MANAGENT
+            CLIENT_MANAGENT,
+            TICKET_ASSIGN
         }
 
         private static Dictionary<PERMISSIONS, List<Role.ROLES>> AUTHORIZATIONS = new Dictionary<PERMISSIONS, List<Role.ROLES>> {
             { PERMISSIONS.USER_MANAGEMENT, new List<Role.ROLES> { Role.ROLES.ADMIN } },
             { PERMISSIONS.CREATE_TICKETS, new List<Role.ROLES> { Role.ROLES.OPERATOR } },
             { PERMISSIONS.SEE_ALL_TICKETS, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR } },
-            { PERMISSIONS.CLIENT_MANAGENT, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR, Role.ROLES.OPERATOR } }
+            { PERMISSIONS.CLIENT_MANAGENT, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR, Role.ROLES.OPERATOR } },
+            { PERMISSIONS.TICKET_ASSIGN, new List<Role.ROLES> { Role.ROLES.SUPERVISOR } }
         };
 
         private static AuthorizationManager instance;

@@ -13,6 +13,8 @@ namespace TPCWeb_Grupo21B
     {
         public User user;
         public List<Ticket> tickets;
+        public List<User> users;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -35,6 +37,10 @@ namespace TPCWeb_Grupo21B
                     tickets = new List<Ticket>();
                 }
 
+                var userB = new UserBusiness();
+
+                users = userB.getAll();
+
                 rptTickets.DataSource = tickets;
                 rptTickets.DataBind();
             }
@@ -53,6 +59,12 @@ namespace TPCWeb_Grupo21B
             string ticketId = btn.CommandArgument.ToString();
 
             Response.Redirect("/Ticket?ticketId=" + ticketId);
+        }
+
+        public string getUserName(long userId)
+        {
+            var us = this.users.Find(u => u.Id == (long)Eval("UserId"));
+            return $"{us.Apellidos}, {us.Nombres}";
         }
     }
 }

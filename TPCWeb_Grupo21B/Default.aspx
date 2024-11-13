@@ -35,7 +35,7 @@
                                 <td><%# Eval("Descripcion") %></td>
                                 <td><%# Eval("Clasificacion.Descripcion") %></td>
                                 <td><%# Eval("Estado.Descripcion") %></td>
-                                <td><%# Eval("UserId") %></td>
+                                <td><%# getUserName((long)Eval("UserId")) %></td>
                                 <td><%# Eval("Prioridad.Descripcion") %></td>
                                 <td><%# Eval("CreatedAt") %></td>
                                 <td><asp:Button ID="btnVerClick" runat="server" Text="Ver" class="btn btn-primary btn-sm" CommandName="VerInfo" CommandArgument='<%# Eval("Id") %>' OnCommand="btnVerClick_Command"/> </td>
