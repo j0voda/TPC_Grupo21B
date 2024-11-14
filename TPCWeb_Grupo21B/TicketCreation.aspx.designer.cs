@@ -51,15 +51,6 @@ namespace TPCWeb_Grupo21B.Screens
         protected global::System.Web.UI.WebControls.DropDownList clasSelect;
 
         /// <summary>
-        /// Control btnNewClasification.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNewClasification;
-
-        /// <summary>
         /// Control prioSelect.
         /// </summary>
         /// <remarks>
@@ -67,15 +58,6 @@ namespace TPCWeb_Grupo21B.Screens
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList prioSelect;
-
-        /// <summary>
-        /// Control btnNewPriority.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNewPriority;
 
         /// <summary>
         /// Control txtDescripcion.
@@ -121,41 +103,5 @@ namespace TPCWeb_Grupo21B.Screens
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveClasif;
-
-        /// <summary>
-        /// Control txtPrioDesc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPrioDesc;
-
-        /// <summary>
-        /// Control txtPrioColor.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPrioColor;
-
-        /// <summary>
-        /// Control lbErrorPrio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbErrorPrio;
-
-        /// <summary>
-        /// Control btnSavePrio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSavePrio;
     }
 }

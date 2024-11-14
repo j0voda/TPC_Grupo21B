@@ -102,6 +102,7 @@ namespace TPCWeb_Grupo21B.Screens
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
+            var auth = AuthorizationManager.getInstance();
 
             var doc = txtCliente.Text.Split(',')[0];
 
@@ -109,7 +110,7 @@ namespace TPCWeb_Grupo21B.Screens
             ticket = new dominio.Ticket();
             ticket.Asunto = txtAsunto.Text;
             ticket.ClientDocument = Int64.Parse(doc);
-            ticket.UserId = user.Id;
+            ticket.UserId = auth.User.Id;
             
             ticket.Estado = new Estado();
             ticket.Estado.Id = 1;
@@ -127,7 +128,7 @@ namespace TPCWeb_Grupo21B.Screens
 
             // Guardado en db
             TicketBusiness tcktBus = new TicketBusiness();
-            int result = tcktBus.insert(ticket);
+            int result = tcktBus.saveOne(ticket);
 
             if (result < 0)
             {
@@ -153,26 +154,6 @@ namespace TPCWeb_Grupo21B.Screens
             clasBusiness.saveOne(clas);
 
             loadData();
-        }
-
-        protected void btnSavePrio_Click(object sender, EventArgs e)
-        {
-            PrioridadBussiness prioBusiness = new PrioridadBussiness();
-            Prioridad prio = new Prioridad();
-            prio.Descripcion = this.txtPrioDesc.Text;
-            prio.Color = this.txtPrioColor.Text;
-
-            prioBusiness.saveOne(prio);
-
-            loadData();
-        }
-
-        protected void btnNewPriority_Click(object sender, EventArgs e)
-        {
-            this.txtPrioDesc.Text = "";
-            this.txtPrioColor.Text = "";
-
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallOpenModal", "ClickOpenModalPrio()", true);
         }
     }
 }

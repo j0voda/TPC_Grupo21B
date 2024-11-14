@@ -18,6 +18,7 @@ namespace TPCWeb_Grupo21B.Screens
         public User user;
         public dominio.Ticket ticketM;
         public Client Client;
+        public List<Observacion> observacions;
         protected void Page_Load(object sender, EventArgs e)
         {
             var auth = AuthorizationManager.getInstance();
@@ -69,9 +70,11 @@ namespace TPCWeb_Grupo21B.Screens
                             this.userSelect.Enabled = false;
                         }
 
-                        this.txtDescripcion.Text = ticketM.Descripcion;
-
                         Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
+
+                        var obsB = new ObservacionBussiness();
+
+                        this.observacions = obsB.getObservacionsByTicket(ticketM.Id);
                     }
                 }
             }
@@ -117,20 +120,6 @@ namespace TPCWeb_Grupo21B.Screens
             Response.Redirect("/Default");
         }
 
-        protected void txtDescripcion_TextChanged(object sender, EventArgs e)
-        {
-            string txtdesc = txtDescripcion.Text;
-            if (string.IsNullOrEmpty(txtdesc))
-            {
-                return;
-                // TODO: label de error
-            }
-
-            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.Descripcion = txtdesc;
-            Session["ticket"] = ticket;
-        }
-
         protected void prioSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             int prioIndex = Convert.ToInt32(prioSelect.SelectedValue);
@@ -153,6 +142,19 @@ namespace TPCWeb_Grupo21B.Screens
             int userIndex = Convert.ToInt32(userSelect.SelectedValue);
             ticket.UserId = userIndex;
             Session["ticket"] = ticket;
+        }
+    
+        public string getUserNameById(long id)
+        {
+            if (users == null)
+            {
+                var userBussiness = new UserBusiness();
+                users = userBussiness.getAll();
+            }
+
+            var userObs = this.users.Find(u => u.Id == id);
+
+            return $"{userObs.Apellidos}, {userObs.Nombres}";
         }
     }
 }

@@ -52,6 +52,8 @@
     <Compile Include="EstadoMapper.cs" />
     <Compile Include="EventBusiness.cs" />
     <Compile Include="MailService.cs" />
+    <Compile Include="ObservacionBussiness.cs" />
+    <Compile Include="ObservacionMapper.cs" />
     <Compile Include="PrioridadBussiness.cs" />
     <Compile Include="PrioridadMapper.cs" />
     <Compile Include="RoleBussiness.cs" />

@@ -52,6 +52,17 @@ Insert into Prioridades(Descripcion, Color) values
 ('Alta', '#ff2c2c');
 Go
 
+Create Table Estados_Usuarios (
+	Id Int PRIMARY KEY IDENTITY(1,1),
+	Descripcion varchar(20) NOT NULL
+);
+Go
+Insert into Estados_Usuarios(Descripcion) values
+('ACTIVO'),
+('INACTIVO'),
+('ELIMINADO');
+Go
+
 Create Table Usuarios(
 	Id bigint not null primary key identity(1, 1),
 	Username varchar(50),
@@ -63,7 +74,8 @@ Create Table Usuarios(
 	LastUpdatedAt datetime not null,
 	Documento bigint not null,
 	Sexo varchar(1) null,
-	RolId int not null foreign key references Roles(Id)
+	RolId int not null foreign key references Roles(Id),
+	EstadoId int NOT NULL DEFAULT 1 REFERENCES Estados_Usuarios(Id);
 )
 Go
 Insert into Usuarios values (
@@ -138,6 +150,14 @@ Insert into Tickets values (
 	CURRENT_TIMESTAMP,
 	1,
 	1
+);
+Go
+CREATE TABLE Observaciones (
+	Id int not null primary key identity(1, 1),
+	Observacion varchar(100) not null,
+	UserId bigint not null foreign key references Usuarios(Id),
+	CreatedAt Date not null DEFAULT GETDATE(),
+	TicketId bigint not null foreign key references Tickets(Id)
 );
 Go
 
