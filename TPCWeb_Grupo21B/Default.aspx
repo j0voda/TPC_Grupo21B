@@ -24,6 +24,10 @@
                     <asp:DropDownList ID="ddlFltEst" runat="server" AutoPostBack="false" CssClass="form-select"></asp:DropDownList>
                 </div>
                 <div class="col-2">
+                    <p>Cliente</p>
+                    <asp:DropDownList ID="ddlFltCli" runat="server" AutoPostBack="false" CssClass="form-select"></asp:DropDownList>
+                </div>
+                <div class="col-2">
                     <p>Prioridad</p>
                     <asp:DropDownList ID="ddlFltPrio" runat="server" AutoPostBack="false" CssClass="form-select"></asp:DropDownList>
                 </div>

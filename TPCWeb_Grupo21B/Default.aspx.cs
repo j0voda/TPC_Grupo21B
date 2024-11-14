@@ -17,6 +17,7 @@ namespace TPCWeb_Grupo21B
         public List<Estado> estados;
         public List<Clasificacion> clasificaciones;
         public List<Prioridad> prioridades;
+        public List<Client> clientes;
         protected void Page_Load(object sender, EventArgs e)
         {
             var auth = AuthorizationManager.getInstance();
@@ -59,10 +60,12 @@ namespace TPCWeb_Grupo21B
             ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
             PrioridadBussiness prioBusiness = new PrioridadBussiness();
             EstadoBussiness estBusiness = new EstadoBussiness();
+            ClientBussiness clientBusiness = new ClientBussiness();
 
             clasificaciones = clasBusiness.getAll();
             prioridades = prioBusiness.getAll();
             estados = estBusiness.getAll();
+            clientes = clientBusiness.getAll();
 
             this.ddlFltPrio.DataSource = prioridades;
             this.ddlFltPrio.DataValueField = "Id";
@@ -84,6 +87,13 @@ namespace TPCWeb_Grupo21B
             this.ddlFltEst.DataBind();
             // Agregar el ítem de valor por defecto al inicio de la lista
             ddlFltEst.Items.Insert(0, new ListItem("Todos", "-1"));
+
+            this.ddlFltCli.DataSource = clientes;
+            this.ddlFltCli.DataValueField = "Document";
+            this.ddlFltCli.DataTextField = "Name";
+            this.ddlFltCli.DataBind();
+            // Agregar el ítem de valor por defecto al inicio de la lista
+            ddlFltCli.Items.Insert(0, new ListItem("Todos", "-1"));
         }
 
         protected void btnVer_Click(object sender, EventArgs e)
@@ -118,13 +128,19 @@ namespace TPCWeb_Grupo21B
             int clasFilter = Convert.ToInt32(this.ddlFltClas.SelectedItem.Value);
             int estFilter = Convert.ToInt32(this.ddlFltEst.SelectedItem.Value);
             int prioFilter = Convert.ToInt32(this.ddlFltPrio.SelectedItem.Value);
-            int idFilter = Convert.ToInt32(this.txtFltId.Text);
+            int idFilter = Convert.ToInt32(String.IsNullOrEmpty(this.txtFltId.Text) ? "-1" : this.txtFltId.Text);
+            long idClient = Convert.ToInt64(this.ddlFltCli.SelectedItem.Value);
 
             tickets = auth.hasPermission(AuthorizationManager.PERMISSIONS.SEE_ALL_TICKETS) ? ticketBusiness.getAll() : ticketBusiness.getAllByUserId(user.Id);
 
             if(idFilter >= 0)
             {
                 tickets.RemoveAll(t => t.Id != idFilter);
+            }
+
+            if (idClient >= 0)
+            {
+                tickets.RemoveAll(t => t.ClientDocument !=  idClient);
             }
 
             if (clasFilter >= 0)
