@@ -156,5 +156,29 @@ namespace TPCWeb_Grupo21B.Screens
 
             return $"{userObs.Apellidos}, {userObs.Nombres}";
         }
+
+        protected void btnReAbrir_Click(object sender, EventArgs e)
+        {
+            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
+            ticket.Estado.Id = 4;
+
+            // Guardado en db
+            TicketBusiness tcktBus = new TicketBusiness();
+            tcktBus.updateOne(ticket);
+
+            Response.Redirect("/Default");
+        }
+
+        protected void btnCerrar_Click(object sender, EventArgs e)
+        {
+            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
+            ticket.Estado.Id = 3;
+
+            // Guardado en db
+            TicketBusiness tcktBus = new TicketBusiness();
+            tcktBus.updateOne(ticket);
+
+            Response.Redirect("/Default");
+        }
     }
 }
