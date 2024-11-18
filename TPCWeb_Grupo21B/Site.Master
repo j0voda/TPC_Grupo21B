@@ -21,8 +21,19 @@
         input, textarea, select {
             max-width: unset;
         }
+        body {
+            height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .body-content {
+            flex-grow: 1;
+        }
     </style>
-    <form runat="server">
+    <form runat="server" class="main-container">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -77,11 +88,10 @@
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Gestión de tickets para call center</p>
-            </footer>
         </div>
+        <footer class="container">
+            <p>&copy; <%: DateTime.Now.Year %> - Gestión de tickets para call center</p>
+        </footer>
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>

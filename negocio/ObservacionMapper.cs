@@ -18,7 +18,11 @@ namespace negocio
 
         public List<string> mapFromObject(Observacion obj)
         {
-            throw new NotImplementedException();
+            return new QueryValuesBuilder()
+                .setStringValue(obj.Observation)
+                .setIntValue(obj.UserId)
+                .setIntValue(obj.TicketId)
+                .build();
         }
 
         public Observacion mapToObject(SqlDataReader reader)

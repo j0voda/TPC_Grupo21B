@@ -39,6 +39,11 @@ namespace acceso_datos
             return this.setStringValue(dateValue.ToString("dd-MM-yyyy"));
         }
 
+        public QueryValuesBuilder setNullValue()
+        {
+            return this.setStringValue(null);
+        }
+
         public List<string> build() { return values; }
 
     }

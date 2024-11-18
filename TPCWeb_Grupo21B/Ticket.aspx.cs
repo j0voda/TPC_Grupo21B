@@ -19,63 +19,61 @@ namespace TPCWeb_Grupo21B.Screens
         public dominio.Ticket ticketM;
         public Client Client;
         public List<Observacion> observacions;
+        private AuthorizationManager auth;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            var auth = AuthorizationManager.getInstance();
+            auth = AuthorizationManager.getInstance();
             if (!auth.isLogIn())
             {
                 Response.Redirect("Login.aspx", true);
             }
             user = auth.User;
 
-            if (!IsPostBack)
+            if (!string.IsNullOrEmpty(Request.QueryString["ticketId"]))
             {
+                string ticketId = Request.QueryString["ticketId"];
+                cargarTicket(ticketId);
 
-                if (!string.IsNullOrEmpty(Request.QueryString["ticketId"]))
+                ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
+                PrioridadBussiness prioBusiness = new PrioridadBussiness();
+                UserBusiness userBusiness = new UserBusiness();
+                ClientBussiness clientBussiness = new ClientBussiness();
+
+                if (ticketM != null)
                 {
-                    string ticketId = Request.QueryString["ticketId"];
-                    cargarTicket(ticketId);
+                    clasificaciones = clasBusiness.getAll();
+                    prioridades = prioBusiness.getAll();
+                    users = userBusiness.getAll();
 
-                    ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
-                    PrioridadBussiness prioBusiness = new PrioridadBussiness();
-                    UserBusiness userBusiness = new UserBusiness();
-                    ClientBussiness clientBussiness = new ClientBussiness();
+                    this.prioSelect.DataSource = prioridades;
+                    this.prioSelect.DataValueField = "Id";
+                    this.prioSelect.DataTextField = "Descripcion";
+                    this.prioSelect.SelectedValue = ticketM.Prioridad.Id.ToString();
+                    this.prioSelect.DataBind();
 
-                    if (ticketM != null)
+                    this.clasSelect.DataSource = clasificaciones;
+                    this.clasSelect.DataValueField = "Id";
+                    this.clasSelect.DataTextField = "Descripcion";
+                    this.clasSelect.SelectedValue = ticketM.Clasificacion.Id.ToString();
+                    this.clasSelect.DataBind();
+
+                    this.userSelect.DataSource = users;
+                    this.userSelect.DataValueField = "Id";
+                    this.userSelect.DataTextField = "Username";
+                    this.userSelect.SelectedValue = ticketM.UserId.ToString();
+                    this.userSelect.DataBind();
+
+                    if (!auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
                     {
-                        clasificaciones = clasBusiness.getAll();
-                        prioridades = prioBusiness.getAll();
-                        users = userBusiness.getAll();
-
-                        this.prioSelect.DataSource = prioridades;
-                        this.prioSelect.DataValueField = "Id";
-                        this.prioSelect.DataTextField = "Descripcion";
-                        this.prioSelect.SelectedValue = ticketM.Prioridad.Id.ToString();
-                        this.prioSelect.DataBind();
-
-                        this.clasSelect.DataSource = clasificaciones;
-                        this.clasSelect.DataValueField = "Id";
-                        this.clasSelect.DataTextField = "Descripcion";
-                        this.clasSelect.SelectedValue = ticketM.Clasificacion.Id.ToString();
-                        this.clasSelect.DataBind();
-
-                        this.userSelect.DataSource = users;
-                        this.userSelect.DataValueField = "Id";
-                        this.userSelect.DataTextField = "Username";
-                        this.userSelect.SelectedValue = ticketM.UserId.ToString();
-                        this.userSelect.DataBind();
-
-                        if (!auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
-                        {
-                            this.userSelect.Enabled = false;
-                        }
-
-                        Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
-
-                        var obsB = new ObservacionBussiness();
-
-                        this.observacions = obsB.getObservacionsByTicket(ticketM.Id);
+                        this.userSelect.Enabled = false;
                     }
+
+                    Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
+
+                    cargarObservaciones();
+
+                    this.btnSaveObs.Enabled = this.tbObservation.Text.Length > 0;
                 }
             }
 
@@ -94,6 +92,13 @@ namespace TPCWeb_Grupo21B.Screens
                     ticketM = ticket;
                 }
             }
+        }
+
+        private void cargarObservaciones()
+        {
+            var obsB = new ObservacionBussiness();
+
+            this.observacions = obsB.getObservacionsByTicket(ticketM.Id);
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -155,6 +160,39 @@ namespace TPCWeb_Grupo21B.Screens
             var userObs = this.users.Find(u => u.Id == id);
 
             return $"{userObs.Apellidos}, {userObs.Nombres}";
+        }
+
+        protected void btnSaveObs_Click(object sender, EventArgs e)
+        {
+            var obsText = this.tbObservation.Text.Trim();
+
+            if (obsText.Length == 0) return;
+
+            var obsB = new ObservacionBussiness();
+
+            var obs = new Observacion()
+            {
+                Observation = obsText,
+                UserId = auth.User.Id,
+                TicketId = ticketM.Id
+            };
+
+            obsB.saveOne(obs);
+
+            ticketM.Estado = new Estado() { Id = (int)Estado.STATES_CODES.ON_ANALISIS };
+
+            var ticketB = new TicketBusiness();
+
+            ticketB.updateOne(ticketM);
+
+            tbObservation.Text = "";
+
+            cargarObservaciones();
+
+            cargarTicket(ticketM.Id.ToString());
+
+            this.btnSaveObs.Enabled = false;
+
         }
     }
 }
