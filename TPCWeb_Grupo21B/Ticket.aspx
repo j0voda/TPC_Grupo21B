@@ -30,8 +30,15 @@
                     <label class="form-label">Prioridad:</label>
                     <asp:DropDownList ID="prioSelect" runat="server" class="form-select" OnSelectedIndexChanged="prioSelect_SelectedIndexChanged"></asp:DropDownList>
                 </div>
+                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" class="btn btn-success" OnClick="btnGuardar_Click" />
+                <% if(ticketM.Estado.Id == 3) { %>
+                   <asp:Button ID="btnReAbrir" runat="server" Text="Reabrir" CssClass="btn btn-primary" OnClick="btnReAbrir_Click"/>
+                <% } else 
+                   {
+                   %>
+                   <asp:Button ID="btnCerrar" runat="server" Text="Cerrar" CssClass="btn btn-primary" OnClick="btnCerrar_Click"/>
+                <% } %>
             </div>
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" class="btn btn-success" OnClick="btnGuardar_Click" />
         </section>
         <section class="col d-flex flex-column">
             <h3>Observaciones:</h3>
