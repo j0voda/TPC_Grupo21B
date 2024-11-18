@@ -75,7 +75,6 @@ namespace TPCWeb_Grupo21B.Screens
                 updateInputs(ticketM);
 
             }
-
         }
 
         private void cargarTicket(string ticketId)
@@ -109,7 +108,7 @@ namespace TPCWeb_Grupo21B.Screens
 
             // Reviso si requiere un cambio de estado
             var originalTicket = tcktBus.getOne(Convert.ToInt32(ticket.Id));
-            
+
             if (originalTicket.UserId != ticket.UserId)
             {
                 ticket.Estado = new Estado
@@ -128,7 +127,7 @@ namespace TPCWeb_Grupo21B.Screens
             tcktBus.updateOne(ticket);
 
         }
-    
+
         public string getUserNameById(long id)
         {
             if (users == null)
