@@ -30,50 +30,53 @@ namespace TPCWeb_Grupo21B.Screens
             }
             user = auth.User;
 
-            if (!string.IsNullOrEmpty(Request.QueryString["ticketId"]))
+            if(!IsPostBack)
             {
-                string ticketId = Request.QueryString["ticketId"];
-                cargarTicket(ticketId);
-
-                ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
-                PrioridadBussiness prioBusiness = new PrioridadBussiness();
-                UserBusiness userBusiness = new UserBusiness();
-                ClientBussiness clientBussiness = new ClientBussiness();
-
-                if (ticketM != null)
+                if (!string.IsNullOrEmpty(Request.QueryString["ticketId"]))
                 {
-                    clasificaciones = clasBusiness.getAll();
-                    prioridades = prioBusiness.getAll();
-                    users = userBusiness.getAll();
+                    string ticketId = Request.QueryString["ticketId"];
+                    cargarTicket(ticketId);
 
-                    this.prioSelect.DataSource = prioridades;
-                    this.prioSelect.DataValueField = "Id";
-                    this.prioSelect.DataTextField = "Descripcion";
-                    this.prioSelect.SelectedValue = ticketM.Prioridad.Id.ToString();
-                    this.prioSelect.DataBind();
+                    ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
+                    PrioridadBussiness prioBusiness = new PrioridadBussiness();
+                    UserBusiness userBusiness = new UserBusiness();
+                    ClientBussiness clientBussiness = new ClientBussiness();
 
-                    this.clasSelect.DataSource = clasificaciones;
-                    this.clasSelect.DataValueField = "Id";
-                    this.clasSelect.DataTextField = "Descripcion";
-                    this.clasSelect.SelectedValue = ticketM.Clasificacion.Id.ToString();
-                    this.clasSelect.DataBind();
-
-                    this.userSelect.DataSource = users;
-                    this.userSelect.DataValueField = "Id";
-                    this.userSelect.DataTextField = "Username";
-                    this.userSelect.SelectedValue = ticketM.UserId.ToString();
-                    this.userSelect.DataBind();
-
-                    if (!auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
+                    if (ticketM != null)
                     {
-                        this.userSelect.Enabled = false;
+                        clasificaciones = clasBusiness.getAll();
+                        prioridades = prioBusiness.getAll();
+                        users = userBusiness.getAll();
+
+                        this.prioSelect.DataSource = prioridades;
+                        this.prioSelect.DataValueField = "Id";
+                        this.prioSelect.DataTextField = "Descripcion";
+                        this.prioSelect.SelectedValue = ticketM.Prioridad.Id.ToString();
+                        this.prioSelect.DataBind();
+
+                        this.clasSelect.DataSource = clasificaciones;
+                        this.clasSelect.DataValueField = "Id";
+                        this.clasSelect.DataTextField = "Descripcion";
+                        this.clasSelect.SelectedValue = ticketM.Clasificacion.Id.ToString();
+                        this.clasSelect.DataBind();
+
+                        this.userSelect.DataSource = users;
+                        this.userSelect.DataValueField = "Id";
+                        this.userSelect.DataTextField = "Username";
+                        this.userSelect.SelectedValue = ticketM.UserId.ToString();
+                        this.userSelect.DataBind();
+
+                        if (!auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
+                        {
+                            this.userSelect.Enabled = false;
+                        }
+
+                        Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
+
+                        cargarObservaciones();
+
+                        this.btnSaveObs.Enabled = this.tbObservation.Text.Length > 0;
                     }
-
-                    Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
-
-                    cargarObservaciones();
-
-                    this.btnSaveObs.Enabled = this.tbObservation.Text.Length > 0;
                 }
             }
 
@@ -127,7 +130,7 @@ namespace TPCWeb_Grupo21B.Screens
 
         protected void prioSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int prioIndex = Convert.ToInt32(prioSelect.SelectedValue);
+            int prioIndex = Convert.ToInt32(prioSelect.SelectedItem.Value);
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
             ticket.Prioridad.Id = prioIndex;
             Session["ticket"] = ticket;
@@ -135,7 +138,7 @@ namespace TPCWeb_Grupo21B.Screens
 
         protected void clasSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int clasIndex = Convert.ToInt32(clasSelect.SelectedValue);
+            int clasIndex = Convert.ToInt32(clasSelect.SelectedItem.Value);
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
             ticket.Clasificacion.Id = clasIndex;
             Session["ticket"] = ticket;
@@ -144,7 +147,7 @@ namespace TPCWeb_Grupo21B.Screens
         protected void userSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            int userIndex = Convert.ToInt32(userSelect.SelectedValue);
+            int userIndex = Convert.ToInt32(userSelect.SelectedItem.Value);
             ticket.UserId = userIndex;
             Session["ticket"] = ticket;
         }
