@@ -19,9 +19,9 @@ namespace TPCWeb_Grupo21B.Screens
         public dominio.Ticket ticket;
         protected void Page_Load(object sender, EventArgs e)
         {
-            loadData();
-
             if (IsPostBack) return;
+
+            loadData();
 
             var auth = AuthorizationManager.getInstance();
             if (!auth.isLogIn())
