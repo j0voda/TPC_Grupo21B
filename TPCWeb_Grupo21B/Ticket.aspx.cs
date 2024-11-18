@@ -115,17 +115,75 @@ namespace TPCWeb_Grupo21B.Screens
                 {
                     Id = (int)Estado.STATES_CODES.ASSIGNED
                 };
+
+                var obsB = new ObservacionBussiness();
+                string obsText = "";
+                var obs = new Observacion()
+                {
+                    Observation = obsText,
+                    UserId = auth.User.Id,
+                    TicketId = ticketM.Id
+                };
+
+                obs.Observation = obs.GenerateAutomaticObservation(4, "Asignado");
+                obsB.saveOne(obs);
             }
 
+            int userIndex = Convert.ToInt32(userSelect.SelectedValue);
             int prioIndex = Convert.ToInt32(prioSelect.SelectedValue);
             int clasIndex = Convert.ToInt32(clasSelect.SelectedValue);
+
+            // Genero observacion indicando cambios de clasificacion / prioridad
+            if(prioIndex != ticket.Prioridad.Id)
+            {
+                var obsB = new ObservacionBussiness();
+                string obsText = "";
+                var obs = new Observacion()
+                {
+                    Observation = obsText,
+                    UserId = auth.User.Id,
+                    TicketId = ticketM.Id
+                };
+
+                obs.Observation = obs.GenerateAutomaticObservation(1, prioSelect.SelectedItem.Text);
+                obsB.saveOne(obs);
+            }
+
+            if(clasIndex != ticket.Clasificacion.Id)
+            {
+                var obsB = new ObservacionBussiness();
+                string obsText = "";
+                var obs = new Observacion()
+                {
+                    Observation = obsText,
+                    UserId = auth.User.Id,
+                    TicketId = ticketM.Id,
+                };
+
+                obs.Observation = obs.GenerateAutomaticObservation(2, clasSelect.SelectedItem.Text);
+                obsB.saveOne(obs);
+            }
+
+            if((userIndex != ticket.UserId) && auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
+            {
+                var obsB = new ObservacionBussiness();
+                string obsText = "";
+                var obs = new Observacion()
+                {
+                    Observation = obsText,
+                    UserId = auth.User.Id,
+                    TicketId = ticketM.Id,
+                };
+
+                obs.Observation = obs.GenerateAutomaticObservation(3, userSelect.SelectedItem.Text);
+                obsB.saveOne(obs);
+            }
 
             ticket.Clasificacion.Id = clasIndex;
             ticket.Prioridad.Id = prioIndex;
 
             // Guardado en db
             tcktBus.updateOne(ticket);
-
         }
 
         public string getUserNameById(long id)
