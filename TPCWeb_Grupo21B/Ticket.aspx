@@ -2,7 +2,16 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <main class="row">
-        <h2 class="mb-3"><%: ticketM.Id %> - <%: ticketM.Asunto %> - <span class="fs-4 text-muted"><%: ticketM.Estado.Descripcion %></span></h2>
+        <header class="w-100 d-flex justify-content-between">
+            <h2 class="mb-3"><%: ticketM.Id %> - <%: ticketM.Asunto %> - <span class="fs-4 text-muted"><%: ticketM.Estado.Descripcion %></span></h2>
+            <% if(ticketM.Estado.Id == 3) { %>
+                <asp:Button ID="btnReAbrir" runat="server" Text="Reabrir" CssClass="btn btn-warning" OnClick="btnReAbrir_Click"/>
+            <% } else 
+                {
+                %>
+                <asp:Button ID="btnCerrar" runat="server" Text="Cerrar" CssClass="btn btn-danger" OnClick="btnCerrar_Click"/>
+            <% } %>
+        </header>
         <section class="col d-flex flex-column">
             <div class="mb-4 border-bottom">
                 <h4>Datos del cliente:</h4>
@@ -20,24 +29,17 @@
                 </ul>
                 <div>
                     <label class="form-label">Asignado a:</label>
-                    <asp:DropDownList ID="userSelect" runat="server" CssClass="form-select" OnSelectedIndexChanged="userSelect_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:DropDownList ID="userSelect" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
                 <div>
                     <label class="form-label">Clasificación:</label>
-                    <asp:DropDownList ID="clasSelect" runat="server" CssClass="form-select" OnSelectedIndexChanged="clasSelect_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:DropDownList ID="clasSelect" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
                 <div>
                     <label class="form-label">Prioridad:</label>
-                    <asp:DropDownList ID="prioSelect" runat="server" class="form-select" OnSelectedIndexChanged="prioSelect_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:DropDownList ID="prioSelect" runat="server" CssClass="form-select"></asp:DropDownList>
                 </div>
-                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" class="btn btn-success" OnClick="btnGuardar_Click" />
-                <% if(ticketM.Estado.Id == 3) { %>
-                   <asp:Button ID="btnReAbrir" runat="server" Text="Reabrir" CssClass="btn btn-primary" OnClick="btnReAbrir_Click"/>
-                <% } else 
-                   {
-                   %>
-                   <asp:Button ID="btnCerrar" runat="server" Text="Cerrar" CssClass="btn btn-primary" OnClick="btnCerrar_Click"/>
-                <% } %>
+                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-success" OnClick="btnGuardar_Click" />
             </div>
         </section>
         <section class="col d-flex flex-column">

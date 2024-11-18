@@ -36,7 +36,7 @@ namespace acceso_datos
 
         public QueryValuesBuilder setDateValue(DateTime dateValue)
         {
-            return this.setStringValue(dateValue.ToString("dd-MM-yyyy"));
+            return this.setStringValue(dateValue.ToString("dd-MM-yyyy HH:mm:ss"));
         }
 
         public QueryValuesBuilder setNullValue()

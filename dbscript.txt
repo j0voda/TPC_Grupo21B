@@ -43,13 +43,14 @@ Go
 Create Table Prioridades(
 	Id int not null primary key identity(1, 1),
 	Descripcion varchar(50) not null,
-	Color nvarchar(50) null
+	Color nvarchar(50) null,
+	TimeToSolve smallint not null default 1
 )
 Go
-Insert into Prioridades(Descripcion, Color) values
-('Baja', '#008000'),
-('Normal', '#ffed29'),
-('Alta', '#ff2c2c');
+Insert into Prioridades(Descripcion, Color, TimeToSolve) values
+('Baja', '#008000', 168),
+('Normal', '#ffed29', 72),
+('Alta', '#ff2c2c', 24);
 Go
 
 Create Table Estados_Usuarios (

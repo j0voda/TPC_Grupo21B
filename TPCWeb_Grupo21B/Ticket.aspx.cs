@@ -3,6 +3,7 @@ using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -40,7 +41,11 @@ namespace TPCWeb_Grupo21B.Screens
                 UserBusiness userBusiness = new UserBusiness();
                 ClientBussiness clientBussiness = new ClientBussiness();
 
-                if (ticketM != null)
+                Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
+
+                cargarObservaciones();
+
+                if (ticketM != null && !IsPostBack)
                 {
                     clasificaciones = clasBusiness.getAll();
                     prioridades = prioBusiness.getAll();
@@ -49,32 +54,26 @@ namespace TPCWeb_Grupo21B.Screens
                     this.prioSelect.DataSource = prioridades;
                     this.prioSelect.DataValueField = "Id";
                     this.prioSelect.DataTextField = "Descripcion";
-                    this.prioSelect.SelectedValue = ticketM.Prioridad.Id.ToString();
-                    this.prioSelect.DataBind();
 
                     this.clasSelect.DataSource = clasificaciones;
                     this.clasSelect.DataValueField = "Id";
                     this.clasSelect.DataTextField = "Descripcion";
-                    this.clasSelect.SelectedValue = ticketM.Clasificacion.Id.ToString();
-                    this.clasSelect.DataBind();
 
                     this.userSelect.DataSource = users;
                     this.userSelect.DataValueField = "Id";
                     this.userSelect.DataTextField = "Username";
+
+                    this.prioSelect.SelectedValue = ticketM.Prioridad.Id.ToString();
+                    this.clasSelect.SelectedValue = ticketM.Clasificacion.Id.ToString();
                     this.userSelect.SelectedValue = ticketM.UserId.ToString();
+
                     this.userSelect.DataBind();
-
-                    if (!auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
-                    {
-                        this.userSelect.Enabled = false;
-                    }
-
-                    Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
-
-                    cargarObservaciones();
-
-                    this.btnSaveObs.Enabled = this.tbObservation.Text.Length > 0;
+                    this.clasSelect.DataBind();
+                    this.prioSelect.DataBind();
                 }
+
+                updateInputs(ticketM);
+
             }
 
         }
@@ -119,34 +118,15 @@ namespace TPCWeb_Grupo21B.Screens
                 };
             }
 
+            int prioIndex = Convert.ToInt32(prioSelect.SelectedValue);
+            int clasIndex = Convert.ToInt32(clasSelect.SelectedValue);
+
+            ticket.Clasificacion.Id = clasIndex;
+            ticket.Prioridad.Id = prioIndex;
+
             // Guardado en db
             tcktBus.updateOne(ticket);
 
-            Response.Redirect("/Default");
-        }
-
-        protected void prioSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int prioIndex = Convert.ToInt32(prioSelect.SelectedValue);
-            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.Prioridad.Id = prioIndex;
-            Session["ticket"] = ticket;
-        }
-
-        protected void clasSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int clasIndex = Convert.ToInt32(clasSelect.SelectedValue);
-            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.Clasificacion.Id = clasIndex;
-            Session["ticket"] = ticket;
-        }
-
-        protected void userSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            int userIndex = Convert.ToInt32(userSelect.SelectedValue);
-            ticket.UserId = userIndex;
-            Session["ticket"] = ticket;
         }
     
         public string getUserNameById(long id)
@@ -204,7 +184,7 @@ namespace TPCWeb_Grupo21B.Screens
             TicketBusiness tcktBus = new TicketBusiness();
             tcktBus.updateOne(ticket);
 
-            Response.Redirect("/Default");
+            updateInputs(ticket);
         }
 
         protected void btnCerrar_Click(object sender, EventArgs e)
@@ -216,7 +196,21 @@ namespace TPCWeb_Grupo21B.Screens
             TicketBusiness tcktBus = new TicketBusiness();
             tcktBus.updateOne(ticket);
 
-            Response.Redirect("/Default");
+            updateInputs(ticket);
+        }
+
+        private void updateInputs(dominio.Ticket ticket)
+        {
+
+            var isClosed = ticket.Estado.Id.Equals((int)Estado.STATES_CODES.CLOSE) || ticketM.Estado.Id.Equals((int)Estado.STATES_CODES.SOLVED);
+            var isOpen = !isClosed;
+
+            this.userSelect.Enabled = isOpen && auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN);
+            this.prioSelect.Enabled = isOpen;
+            this.clasSelect.Enabled = isOpen;
+            this.btnGuardar.Enabled = isOpen;
+            this.tbObservation.Enabled = isOpen;
+            this.btnSaveObs.Enabled = isOpen && this.tbObservation.Text.Length > 0;
         }
     }
 }

@@ -1,7 +1,20 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TPCWeb_Grupo21B._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+    <style>
+        .urgent_time {
+            animation-name: color;
+            animation-duration: .5s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate-reverse;
+            animation-timing-function: ease-in;
+        }
+        @keyframes color {
+            to {
+                background-color: white;
+            }
+        }
+    </style>
     <main>
         <section class="row mb-4">
             <h2 id="aspnetTitle" class="fs-3">Bienvenido: <%: user.Nombres %></h2>
@@ -57,7 +70,7 @@
                 <tbody>
                     <asp:Repeater runat="server" ID="rptTickets">
                         <ItemTemplate>
-                            <tr>
+                            <tr class='<%# getClassIfUrgent((DateTime)Eval("CreatedAt"), (Int16)Eval("Prioridad.TimeToSolve")) %>' style='background-color: <%# Eval("Prioridad.Color") %>'>
                                 <td><%# Eval("Id") %></td>
                                 <td><%# Eval("Asunto") %></td>
                                 <td><%# Eval("Descripcion") %></td>

@@ -30,7 +30,7 @@ namespace negocio
         {
             List<Ticket> result = base.select(
                 $"t.Id, t.Asunto, t.Descripcion, t.UserId, t.ClientDocument, e.Id as EstadoId, e.Descripcion as EstadoDesc, " +
-                $"t.CreatedAt, t.LastUpdatedAt, c.Id as ClasificacionId, c.Descripcion as ClasificacionDesc, p.Id as PrioridadId, p.Descripcion as PrioridadDesc, p.Color as PrioridadColor", 
+                $"t.CreatedAt, t.LastUpdatedAt, c.Id as ClasificacionId, c.Descripcion as ClasificacionDesc, p.Id as PrioridadId, p.Descripcion as PrioridadDesc, p.Color as PrioridadColor, p.TimeToSolve as TimeToSolve", 
                 $"INNER JOIN Estados e on t.EstadoId = e.Id " +
                 $"INNER JOIN Clasificaciones c on t.ClasificacionId = c.Id " +
                 $"INNER JOIN Prioridades p on t.PrioridadId = p.Id");

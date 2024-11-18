@@ -161,5 +161,15 @@ namespace TPCWeb_Grupo21B
             rptTickets.DataSource = tickets;
             rptTickets.DataBind();
         }
+        
+        public string getClassIfUrgent(DateTime created, Int16 hours) 
+        {
+
+            if (created.AddHours(hours) <= DateTime.Now)
+            {
+                return "urgent_time";
+            }
+            return "";
+        }
     }
 }

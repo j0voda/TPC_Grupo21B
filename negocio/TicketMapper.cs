@@ -52,7 +52,8 @@ namespace negocio
             ticket.Clasificacion.Descripcion = reader.GetString(10);
             ticket.Prioridad.Id = reader.GetInt32(11);
             ticket.Prioridad.Descripcion = reader.GetString(12);
-
+            ticket.Prioridad.Color = reader.GetString(13);
+            ticket.Prioridad.TimeToSolve = reader.GetInt16(14);
             return ticket;
         }
     }

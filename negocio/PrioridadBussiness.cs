@@ -15,7 +15,8 @@ namespace negocio
         {
             this.columns = new List<string> {
                 "Descripcion",
-                "Color"
+                "Color",
+                "TimeToSolve"
             };
         }
 

@@ -11,5 +11,6 @@ namespace dominio
         public Int32 Id { get; set; }
         public string Descripcion { get; set; }
         public string Color { get; set; }
+        public Int16 TimeToSolve { get; set; }
     }
 }

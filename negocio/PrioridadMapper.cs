@@ -18,6 +18,7 @@ namespace negocio
             return new QueryValuesBuilder()
                 .setStringValue(obj.Descripcion)
                 .setStringValue(obj.Color)
+                .setIntValue(obj.TimeToSolve)
                 .build();
         }
 
@@ -28,6 +29,7 @@ namespace negocio
             prio.Id = reader.GetInt32(0);
             prio.Descripcion = reader.GetString(1);
             prio.Color = reader.GetString(2);
+            prio.TimeToSolve = reader.GetInt16(3);
 
             return prio;
         }
