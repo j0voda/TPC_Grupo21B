@@ -157,7 +157,7 @@ CREATE TABLE Observaciones (
 	Id int not null primary key identity(1, 1),
 	Observacion varchar(100) not null,
 	UserId bigint not null foreign key references Usuarios(Id),
-	CreatedAt Date not null DEFAULT GETDATE(),
+	CreatedAt datetime not null DEFAULT GETDATE(),
 	TicketId bigint not null foreign key references Tickets(Id)
 );
 Go

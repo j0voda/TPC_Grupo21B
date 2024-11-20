@@ -28,8 +28,8 @@ namespace acceso_datos
 
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
-                DataSource = ".\\SQLEXPRESS",
-                //DataSource = "localhost",
+                //DataSource = ".\\SQLEXPRESS",
+                DataSource = "localhost",
                 InitialCatalog = "TPC_CALLCENTER",
                 IntegratedSecurity = true
             };

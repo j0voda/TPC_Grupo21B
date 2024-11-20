@@ -34,16 +34,12 @@ namespace TPCWeb_Grupo21B.Screens
             if (!string.IsNullOrEmpty(Request.QueryString["ticketId"]))
             {
                 string ticketId = Request.QueryString["ticketId"];
-                cargarTicket(ticketId);
+
+                loadAllData(new dominio.Ticket() { Id = int.Parse(ticketId) });
 
                 ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
                 PrioridadBussiness prioBusiness = new PrioridadBussiness();
                 UserBusiness userBusiness = new UserBusiness();
-                ClientBussiness clientBussiness = new ClientBussiness();
-
-                Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
-
-                cargarObservaciones();
 
                 if (ticketM != null && !IsPostBack)
                 {
@@ -72,31 +68,7 @@ namespace TPCWeb_Grupo21B.Screens
                     this.prioSelect.DataBind();
                 }
 
-                updateInputs(ticketM);
-
             }
-        }
-
-        private void cargarTicket(string ticketId)
-        {
-            if (!string.IsNullOrEmpty(ticketId))
-            {
-                TicketBusiness ticketBusiness = new TicketBusiness();
-                dominio.Ticket ticket = ticketBusiness.getOne(Convert.ToInt32(ticketId));
-
-                if (ticket != null)
-                {
-                    Session["ticket"] = ticket;
-                    ticketM = ticket;
-                }
-            }
-        }
-
-        private void cargarObservaciones()
-        {
-            var obsB = new ObservacionBussiness();
-
-            this.observacions = obsB.getObservacionsByTicket(ticketM.Id);
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -125,7 +97,11 @@ namespace TPCWeb_Grupo21B.Screens
                     TicketId = ticketM.Id
                 };
 
-                obs.Observation = obs.GenerateAutomaticObservation(4, "Asignado");
+                var estadoB = new EstadoBussiness();
+
+                var est = estadoB.getOne(ticket.Estado);
+
+                obs.Observation = obs.GenerateAutomaticObservation(4, est.Descripcion);
                 obsB.saveOne(obs);
             }
 
@@ -184,6 +160,9 @@ namespace TPCWeb_Grupo21B.Screens
 
             // Guardado en db
             tcktBus.updateOne(ticket);
+
+            // Actualizo la información
+            loadAllData(ticket);
         }
 
         public string getUserNameById(long id)
@@ -224,38 +203,97 @@ namespace TPCWeb_Grupo21B.Screens
 
             tbObservation.Text = "";
 
-            cargarObservaciones();
-
-            cargarTicket(ticketM.Id.ToString());
-
             this.btnSaveObs.Enabled = false;
 
+            loadAllData(ticketM);
         }
 
         protected void btnReAbrir_Click(object sender, EventArgs e)
         {
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.Estado.Id = 4;
+            ticket.Estado.Id = (int)Estado.STATES_CODES.REOPEN;
+
+            var estadoB = new EstadoBussiness();
+
+            var est = estadoB.getOne(ticket.Estado);
 
             // Guardado en db
             TicketBusiness tcktBus = new TicketBusiness();
             tcktBus.updateOne(ticket);
 
-            updateInputs(ticket);
+            var obsB = new ObservacionBussiness();
+            string obsText = "";
+            var obs = new Observacion()
+            {
+                Observation = obsText,
+                UserId = auth.User.Id,
+                TicketId = ticketM.Id
+            };
+
+            obs.Observation = obs.GenerateAutomaticObservation(4, est.Descripcion);
+            obsB.saveOne(obs);
+
+            loadAllData(ticket);
         }
 
         protected void btnCerrar_Click(object sender, EventArgs e)
         {
+            var solved = this.checkSolved.Checked;
+
             dominio.Ticket ticket = Session["ticket"] as dominio.Ticket;
-            ticket.Estado.Id = 3;
+
+            ticket.Estado.Id = (int)(solved ? Estado.STATES_CODES.SOLVED : Estado.STATES_CODES.CLOSE);
 
             // Guardado en db
             TicketBusiness tcktBus = new TicketBusiness();
             tcktBus.updateOne(ticket);
 
-            updateInputs(ticket);
+            var obsB = new ObservacionBussiness();
+            string obsText = "";
+            var obs = new Observacion()
+            {
+                Observation = obsText,
+                UserId = auth.User.Id,
+                TicketId = ticketM.Id
+            };
+
+            var estadoB = new EstadoBussiness();
+
+            var est = estadoB.getOne(ticket.Estado);
+
+            obs.Observation = obs.GenerateAutomaticObservation(4, est.Descripcion);
+            obsB.saveOne(obs);
+
+            obsB.saveOne(new Observacion()
+            {
+                Observation = this.tbFinalMessage.Value.Trim(),
+                UserId = auth.User.Id,
+                TicketId = ticketM.Id
+            });
+
+            loadAllData(ticket);
         }
 
+        private void cargarTicket(string ticketId)
+        {
+            if (!string.IsNullOrEmpty(ticketId))
+            {
+                TicketBusiness ticketBusiness = new TicketBusiness();
+                dominio.Ticket ticket = ticketBusiness.getOne(Convert.ToInt32(ticketId));
+
+                if (ticket != null)
+                {
+                    Session["ticket"] = ticket;
+                    ticketM = ticket;
+                }
+            }
+        }
+        private void cargarObservaciones()
+        {
+            var obsB = new ObservacionBussiness();
+
+            this.observacions = obsB.getObservacionsByTicket(ticketM.Id);
+        }
         private void updateInputs(dominio.Ticket ticket)
         {
 
@@ -268,6 +306,17 @@ namespace TPCWeb_Grupo21B.Screens
             this.btnGuardar.Enabled = isOpen;
             this.tbObservation.Enabled = isOpen;
             this.btnSaveObs.Enabled = isOpen && this.tbObservation.Text.Length > 0;
+            this.btnCerrar.Enabled = false;
+        }
+        private void loadAllData(dominio.Ticket ticket)
+        {
+            cargarTicket(ticket.Id.ToString());
+
+            ClientBussiness clientBussiness = new ClientBussiness();
+            Client = clientBussiness.getOne(new Client() { Document = ticketM.ClientDocument });
+
+            cargarObservaciones();
+            updateInputs(ticketM);
         }
     }
 }

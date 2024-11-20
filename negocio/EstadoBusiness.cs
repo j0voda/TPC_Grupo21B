@@ -13,7 +13,6 @@ namespace negocio
         public EstadoBussiness() : base("Estados", "Id", new EstadoMapper())
         {
             this.columns = new List<string> {
-                "Id",
                 "Descripcion"
             };
         }

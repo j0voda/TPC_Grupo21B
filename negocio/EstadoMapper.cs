@@ -10,7 +10,7 @@ namespace negocio
     {
         public string getIdentifier(Estado obj)
         {
-            throw new NotImplementedException();
+            return obj.Id.ToString();
         }
 
         public List<string> mapFromObject(Estado obj)
