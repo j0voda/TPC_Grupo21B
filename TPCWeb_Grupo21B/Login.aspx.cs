@@ -18,30 +18,12 @@ namespace TPCWeb_Grupo21B
 
         protected void username_TextChanged(object sender, EventArgs e)
         {
-            string user = this.username.Text;
-
-            if (user == null || user.Length == 0)
-            {
-                updateErrors("Debe ingresar un usuario.");
-            }
-            else
-            {
-                updateErrors();
-            }
+            
         }
 
         protected void password_TextChanged(object sender, EventArgs e)
         {
-            string pass = this.password.Text;
-
-            if (pass == null || pass.Length == 0)
-            {
-                updateErrors("Debe ingresar una contraseña.");
-            }
-            else
-            {
-                updateErrors();
-            }
+            
         }
 
         protected void btnNext_Click(object sender, EventArgs e)
@@ -49,29 +31,77 @@ namespace TPCWeb_Grupo21B
             string user = this.username.Text;
             string pass = this.password.Text;
 
-            if (pass == null || pass.Length == 0 || user == null || user.Length == 0)
+            if (validateUsername() && validatePassword())
             {
-                updateErrors("Debe completar los campos.");
+                User u = AuthorizationManager.getInstance().logIn(user, pass);
+
+                if (u == null)
+                {
+                    updateErrors("Credenciales incorrectas.");
+                    return;    
+                }
+
+                if (u.Username == null || u.Username.Length == 0)
+                {
+                    Response.Redirect("Register.aspx", true);
+                }
+
+                Response.Redirect("Default.aspx");
             }
             else
             {
-                updateErrors();
+                return;
             }
+        }
 
-            User u = AuthorizationManager.getInstance().logIn(user, pass);
+        private bool validateUsername()
+        {
+            bool valid = true;
+            string user = this.username.Text;
 
-            if (u == null)
+            if (string.IsNullOrEmpty(user))
             {
-                updateErrors("Credenciales incorrectas.");
-                return;    
+                this.username.CssClass = addIsInvalidClass(this.username.CssClass);
+                this.lblUerror.Text = "Debe completar el campo.";
+                valid = false;
             }
-
-            if (u.Username == null || u.Username.Length == 0)
+            else if (user.Length < 5) 
             {
-                Response.Redirect("Register.aspx", true);
+                this.username.CssClass = addIsInvalidClass(this.username.CssClass);
+                this.lblUerror.Text = "Ingrese mínimo 5 caracteres.";
+                valid = false;
+            }
+            else
+            {
+                this.username.CssClass = removeIsInvalidClass(this.username.CssClass);
             }
 
-            Response.Redirect("Default.aspx");
+            return valid;
+        }
+
+        private bool validatePassword()
+        {
+            bool valid = true;
+            string pass = this.password.Text;
+
+            if (string.IsNullOrEmpty(pass))
+            {
+                this.password.CssClass = addIsInvalidClass(this.password.CssClass);
+                this.lblPerror.Text = "Debe completar el campo.";
+                valid = false;
+            }
+            else if(pass.Length < 5)
+            {
+                this.password.CssClass = addIsInvalidClass(this.password.CssClass);
+                this.lblPerror.Text = "Ingrese mínimo 5 caracteres.";
+                valid = false;
+            }
+            else
+            {
+                this.password.CssClass = removeIsInvalidClass(this.password.CssClass);
+            }
+
+            return valid;
         }
 
         private void updateErrors(string error = null)
@@ -84,7 +114,7 @@ namespace TPCWeb_Grupo21B
             }
             else
             {
-                this.username.CssClass = addIsInvalidClass(this.username.CssClass);
+                this.username.CssClass = removeIsInvalidClass(this.username.CssClass);
                 this.password.CssClass = removeIsInvalidClass(this.password.CssClass);
             }
         }

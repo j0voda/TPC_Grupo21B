@@ -106,36 +106,121 @@ namespace TPCWeb_Grupo21B.Screens
 
             var doc = txtCliente.Text.Split(',')[0];
 
-            // TODO: Validators
-            ticket = new dominio.Ticket();
-            ticket.Asunto = txtAsunto.Text;
-            ticket.ClientDocument = Int64.Parse(doc);
-            ticket.UserId = auth.User.Id;
-            
-            ticket.Estado = new Estado();
-            ticket.Estado.Id = 1;
-
-            ticket.CreatedAt = DateTime.Now;
-            ticket.LastUpdatedAt = DateTime.Now;
-
-            ticket.Clasificacion = new Clasificacion();
-            ticket.Clasificacion.Id = Convert.ToInt32(this.clasSelect.SelectedItem.Value);
-
-            ticket.Prioridad = new Prioridad();
-            ticket.Prioridad.Id = Convert.ToInt32(this.prioSelect.SelectedItem.Value);
-
-            ticket.Descripcion = txtDescripcion.Text;
-
-            // Guardado en db
-            TicketBusiness tcktBus = new TicketBusiness();
-            int result = tcktBus.saveOne(ticket);
-
-            if (result < 0)
+            if(validateAsunto() && validateDescription() && validateClient())
             {
-                return;
+                ticket = new dominio.Ticket();
+                ticket.Asunto = txtAsunto.Text;
+                ticket.ClientDocument = Int64.Parse(doc);
+                ticket.UserId = auth.User.Id;
+            
+                ticket.Estado = new Estado();
+                ticket.Estado.Id = 1;
+
+                ticket.CreatedAt = DateTime.Now;
+                ticket.LastUpdatedAt = DateTime.Now;
+
+                ticket.Clasificacion = new Clasificacion();
+                ticket.Clasificacion.Id = Convert.ToInt32(this.clasSelect.SelectedItem.Value);
+
+                ticket.Prioridad = new Prioridad();
+                ticket.Prioridad.Id = Convert.ToInt32(this.prioSelect.SelectedItem.Value);
+
+                ticket.Descripcion = txtDescripcion.Text;
+
+                // Guardado en db
+                TicketBusiness tcktBus = new TicketBusiness();
+                int result = tcktBus.saveOne(ticket);
+
+                if (result < 0)
+                {
+                    return;
+                }
+
+                Response.Redirect("/Default");
             }
 
-            Response.Redirect("/Default");
+            return;
+        }
+
+        private string addIsInvalidClass(string classes)
+        {
+            if (!classes.Contains("is-valid")) return classes + " is-invalid";
+
+            return classes;
+        }
+
+        private string removeIsInvalidClass(string classes)
+        {
+            return classes.Replace("is-invalid", "");
+        }
+
+        private bool validateAsunto()
+        {
+            bool valid = true;
+            string asuntotxt = this.txtAsunto.Text.Trim();
+
+            if (string.IsNullOrEmpty(asuntotxt))
+            {
+                this.txtAsunto.CssClass = addIsInvalidClass(this.txtAsunto.CssClass);
+                this.asuntoError.Text = "Debe completar el campo.";
+                valid = false;
+            }
+            else if (asuntotxt.Any(ch => !char.IsLetterOrDigit(ch) && ch != ' '))
+            {
+                this.txtAsunto.CssClass = addIsInvalidClass(this.txtAsunto.CssClass);
+                this.asuntoError.Text = "Ingrese solo letras.";
+                valid = false;
+            }
+            else
+            {
+                this.txtAsunto.CssClass = removeIsInvalidClass(this.txtAsunto.CssClass);
+            }
+
+            return valid;
+        }
+
+        private bool validateDescription()
+        {
+            bool valid = true;
+            string desctxt = this.txtDescripcion.Text.Trim();
+
+            if (string.IsNullOrEmpty(desctxt))
+            {
+                this.txtDescripcion.CssClass = addIsInvalidClass(this.txtDescripcion.CssClass);
+                this.descError.Text = "Debe completar el campo.";
+                valid = false;
+            }
+            else if (desctxt.Any(ch => !char.IsLetterOrDigit(ch) && ch != ' '))
+            {
+                this.txtDescripcion.CssClass = addIsInvalidClass(this.txtDescripcion.CssClass);
+                this.descError.Text = "Ingrese solo letras.";
+                valid = false;
+            }
+            else
+            {
+                this.txtDescripcion.CssClass = removeIsInvalidClass(this.txtDescripcion.CssClass);
+            }
+
+            return valid;
+        }
+
+        private bool validateClient()
+        {
+            bool valid = true;
+            string clientId = this.txtCliente.Text.Trim();
+
+            if (string.IsNullOrEmpty(clientId))
+            {
+                this.txtCliente.CssClass = addIsInvalidClass(this.txtCliente.CssClass);
+                this.clientError.Text = "Debe completar el campo.";
+                valid = false;
+            }
+            else
+            {
+                this.clientError.CssClass = removeIsInvalidClass(this.txtCliente.CssClass);
+            }
+
+            return valid;
         }
 
         protected void btnNewClasification_Click(object sender, EventArgs e)

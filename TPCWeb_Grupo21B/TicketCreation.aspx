@@ -45,18 +45,20 @@
         <div class="d-flex flex-column gap-3 w-50 mx-auto justify-content-center">
             <div>
                 <label class="form-label">Asunto:</label>
-                <asp:TextBox ID="txtAsunto" runat="server" class="form-control" OnTextChanged="txtAsunto_TextChanged"></asp:TextBox>
+                <asp:Label runat="server" ID="asuntoError" Text="" CssClass="invalid-feedback"></asp:Label>
+                <asp:TextBox ID="txtAsunto" runat="server" CssClass="form-control" OnTextChanged="txtAsunto_TextChanged"></asp:TextBox>
             </div>
             <div>
                 <label class="form-label">Nro Cliente:</label>
                 <div id="client-combo">
-                    <asp:TextBox ID="txtCliente" runat="server" class="form-control border-bottom-0 rounded-top rounded-0" OnTextChanged="txtCliente_TextChanged" AutoPostBack="true" placeholder="Buscar cliente..."></asp:TextBox>
+                    <asp:TextBox ID="txtCliente" runat="server" CssClass="form-control border-bottom-0 rounded-top rounded-0" OnTextChanged="txtCliente_TextChanged" AutoPostBack="true" placeholder="Buscar cliente..."></asp:TextBox>
                     <asp:DropDownList ID="ddCliente" runat="server" SkinID="client-select-combo" CssClass="form-select rounded-bottom rounded-0"></asp:DropDownList>
                 </div>
             </div>
             <div>
                 <label class="form-label">Clasificación:</label>
                 <div class="d-flex gap-1">
+                    <asp:Label runat="server" ID="clientError" Text="" CssClass="invalid-feedback"></asp:Label>
                     <asp:DropDownList ID="clasSelect" runat="server" class="form-select" OnSelectedIndexChanged="clasSelect_SelectedIndexChanged"></asp:DropDownList>
                     <button type="button" id="btn-modal-open-clas" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createClasificationModal">Agregar</button>
                 </div>
@@ -67,7 +69,8 @@
             </div>
             <div>
                 <label class="form-label">Descripción detallada:</label>
-                <asp:TextBox ID="txtDescripcion" runat="server" class="form-control" OnTextChanged="txtDescripcion_TextChanged" TextMode="MultiLine"></asp:TextBox>
+                <asp:Label runat="server" ID="descError" Text="" CssClass="invalid-feedback"></asp:Label>
+                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" OnTextChanged="txtDescripcion_TextChanged" TextMode="MultiLine"></asp:TextBox>
             </div>
             <asp:Button ID="btnCrear" runat="server" Text="Crear" class="btn btn-success" OnClick="btnCrear_Click"/>
         </div>

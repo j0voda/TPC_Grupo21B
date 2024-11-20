@@ -15,15 +15,17 @@
         <div class="col-3">
             <asp:Label runat="server" CssClass="control-label mb-1" AssociatedControlID="username">Usuario:</asp:Label>
             <asp:TextBox ID="username" runat="server" CssClass="form-control" ClientIDMode="Static" OnTextChanged="username_TextChanged"></asp:TextBox>
+            <asp:Label ID="lblUerror" runat="server" Text="" CssClass="invalid-feedback"></asp:Label>
         </div>
 
         <div class="col-3">
             <asp:Label runat="server" CssClass="control-label mb-1" AssociatedControlID="password">Contraseña:</asp:Label>
             <asp:TextBox ID="password" runat="server" CssClass="form-control" ClientIDMode="Static" OnTextChanged="password_TextChanged" TextMode="Password"></asp:TextBox>
+            <asp:Label ID="lblPerror" runat="server" Text="" CssClass="invalid-feedback"></asp:Label>
         </div>
-
+        <div>
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="invalid-feedback"></asp:Label>
+        </div>
         <asp:Button ID="btnNext" runat="server" Text="Ingresar" CssClass="btn btn-primary mt-2" OnClick="btnNext_Click" />
-
-        <asp:Label ID="lblError" runat="server" Text="" CssClass="invalid-feedback"></asp:Label>
     </main>
 </asp:Content>
