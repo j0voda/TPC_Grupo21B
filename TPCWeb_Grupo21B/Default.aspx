@@ -64,6 +64,7 @@
                         <th scope="col">Asignado a</th>
                         <th scope="col">Prioridad</th>
                         <th scope="col">Creado</th>
+                        <th scope="col">Tiempo Restante</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -79,6 +80,12 @@
                                 <td><%# getUserName((long)Eval("UserId")) %></td>
                                 <td><%# Eval("Prioridad.Descripcion") %></td>
                                 <td><%# Eval("CreatedAt") %></td>
+                                <td>
+                                    <span id="timer_<%# Eval("Id") %>" class="countdown" 
+                                        data-created-at='<%# ((DateTime)Eval("CreatedAt")).ToString("yyyy-MM-ddTHH:mm:ssZ") %>' 
+                                        data-days="<%# Eval("Prioridad.TimeToSolve") %>">
+                                    </span>
+                                </td>
                                 <td><asp:Button ID="btnVerClick" runat="server" Text="Ver" class="btn btn-primary btn-sm" CommandName="VerInfo" CommandArgument='<%# Eval("Id") %>' OnCommand="btnVerClick_Command"/> </td>
                                 <%--<td><button class="btn btn-primary btn-sm">Ver</button></td>--%>
                             </tr>
@@ -89,7 +96,43 @@
             </table>
         </section>
     </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get de contadores
+            const timers = document.querySelectorAll(".countdown");
 
+            timers.forEach(timer => {
+                const createdAt = new Date(timer.getAttribute("data-created-at"));
+                const timeToSolve = parseInt(timer.getAttribute("data-days")) || 0;
+
+                // Calculo de tiempo restante
+                const deadline = new Date(createdAt);
+                deadline.setDate(deadline.getDate() + timeToSolve);
+
+                function updateTimer() {
+                    const now = new Date();
+                    const diff = deadline - now;
+
+                    if (diff <= 0) {
+                        timer.textContent = "Tiempo expirado";
+                        timer.style.color = "red";
+                        return;
+                    }
+
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    timer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+
+                // Actualizar timer cada 1 segundo
+                updateTimer();
+                setInterval(updateTimer, 1000);
+            });
+        });
+    </script>
 </asp:Content>
 
 <%--<% foreach (var ticket in tickets) { %>
