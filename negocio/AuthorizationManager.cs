@@ -78,7 +78,7 @@ namespace negocio
 
         public bool isRegitered()
         {
-            return user.Username != null && user.Username.Length > 0;
+            return user.Estado.Id == (int)UserState.USER_STATES.ACTIVE;
         }
 
         public User logIn(string username, string password) {

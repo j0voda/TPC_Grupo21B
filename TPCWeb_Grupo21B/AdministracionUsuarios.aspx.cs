@@ -13,7 +13,12 @@ namespace TPCWeb_Grupo21B
     {
 
         public List<User> users;
+        public User selectedUser;
+        public bool openModal = false;
+        
         private List<Role> roles;
+
+        private static string SELECTED_USER_KEY = "SelectedUser";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,9 +27,14 @@ namespace TPCWeb_Grupo21B
                 Response.Redirect("/Default");
             }
 
+            selectedUser = Session[SELECTED_USER_KEY] != null ? (User)Session[SELECTED_USER_KEY] : null;
+
             var userBusiness = new UserBusiness();
 
             this.users = userBusiness.getAll();
+
+            this.rpUsers.DataSource = users;
+            this.rpUsers.DataBind();
 
             var roleBussiness = new RoleBussiness();
 
@@ -44,7 +54,7 @@ namespace TPCWeb_Grupo21B
             
             Random random = new Random();
             
-            var temporalPassword = random.Next(1000, 9999).ToString();
+            var temporalPassword = random.Next(10000, 99999).ToString();
 
             var user = new User() { 
                 Email = mail, 
@@ -54,7 +64,7 @@ namespace TPCWeb_Grupo21B
                 Password=temporalPassword,
                 CreatedAt = DateTime.Now,
                 LastUpdatedAt = DateTime.Now,
-                Estado = new UserState() { Id = UserState.USER_STATES.INACTIVE }
+                Estado = new UserState() { Id = (int)UserState.USER_STATES.INACTIVE }
             };
 
             var userBussines = new UserBusiness();
@@ -73,6 +83,52 @@ namespace TPCWeb_Grupo21B
                 $"Intenta iniciar sesión en la pantalla principal con esta contraseña temporal para terminar tu proceso de registro: {temporalPassword}. \n Por seguridad no compartas tu contraseña con nadie."
             );
 
+            this.users = new UserBusiness().getAll();
+
+            this.rpUsers.DataSource = users;
+            this.rpUsers.DataBind();
+        }
+
+        protected void rpUsers_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            long id = long.Parse(e.CommandArgument.ToString());
+
+            this.selectedUser = users.Find((u) => u.Id.Equals(id));
+
+            this.tbDocument.Text = selectedUser.Documento.ToString();
+            this.tbDocument.Enabled = false;
+
+            this.tbMail.Text = selectedUser.Email;
+            this.sltSex.SelectedValue = selectedUser.Sexo;
+
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallOpenModal", "ClickOpenModal()", true);
+            Session[SELECTED_USER_KEY] = selectedUser;
+            this.openModal = true;
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            var userB = new UserBusiness();
+
+            userB.deleteOne(selectedUser);
+
+            this.users = new UserBusiness().getAll();
+
+            this.rpUsers.DataSource = users;
+            this.rpUsers.DataBind();
+        }
+
+        protected void btnNewUser_Click(object sender, EventArgs e)
+        {
+            this.selectedUser = null;
+
+            this.tbDocument.Enabled = true;
+            this.tbDocument.Text = "";
+            this.tbMail.Text = "";
+            this.sltSex.SelectedIndex = 0;
+
+            Session[SELECTED_USER_KEY] = null;
+            this.openModal = true;
         }
     }
 }

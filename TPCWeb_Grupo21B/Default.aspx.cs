@@ -22,7 +22,7 @@ namespace TPCWeb_Grupo21B
         {
             var auth = AuthorizationManager.getInstance();
 
-            if (!auth.isLogIn())
+            if (!auth.isLogIn() || !auth.isRegitered())
             {
                 Response.Redirect("Login.aspx", true);
             }

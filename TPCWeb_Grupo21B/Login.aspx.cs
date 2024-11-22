@@ -33,7 +33,8 @@ namespace TPCWeb_Grupo21B
 
             if (validateUsername() && validatePassword())
             {
-                User u = AuthorizationManager.getInstance().logIn(user, pass);
+                var auth = AuthorizationManager.getInstance();
+                User u = auth.logIn(user, pass);
 
                 if (u == null)
                 {
@@ -41,7 +42,7 @@ namespace TPCWeb_Grupo21B
                     return;    
                 }
 
-                if (u.Username == null || u.Username.Length == 0)
+                if (!auth.isRegitered())
                 {
                     Response.Redirect("Register.aspx", true);
                 }

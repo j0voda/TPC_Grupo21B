@@ -107,7 +107,7 @@
 
                 // Calculo de tiempo restante
                 const deadline = new Date(createdAt);
-                deadline.setDate(deadline.getDate() + timeToSolve);
+                deadline.setTime(deadline.getTime() + (timeToSolve * 60 * 60 * 1000));
 
                 function updateTimer() {
                     const now = new Date();

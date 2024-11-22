@@ -16,7 +16,7 @@ namespace dominio
             DELETED
         }
 
-        public USER_STATES Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

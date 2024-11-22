@@ -55,6 +55,7 @@ namespace TPCWeb_Grupo21B.Screens
             user.Nombres = name;
             user.Apellidos = surname;
             user.Password = password;
+            user.Estado = new UserState() { Id = (int)UserState.USER_STATES.ACTIVE };
 
             userBussiness.updateOne(user);
 
