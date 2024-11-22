@@ -33,7 +33,7 @@ namespace negocio
                 $"t.CreatedAt, t.LastUpdatedAt, c.Id as ClasificacionId, c.Descripcion as ClasificacionDesc, p.Id as PrioridadId, p.Descripcion as PrioridadDesc, p.Color as PrioridadColor, p.TimeToSolve as TimeToSolve", 
                 $"INNER JOIN Estados e on t.EstadoId = e.Id " +
                 $"INNER JOIN Clasificaciones c on t.ClasificacionId = c.Id " +
-                $"INNER JOIN Prioridades p on t.PrioridadId = p.Id");
+                $"INNER JOIN Prioridades p on t.PrioridadId = p.Id ORDER BY CreatedAt DESC");
 
             if (result.Count == 0)
             {
@@ -51,7 +51,7 @@ namespace negocio
                 $"INNER JOIN Estados e on t.EstadoId = e.Id " +
                 $"INNER JOIN Clasificaciones c on t.ClasificacionId = c.Id " +
                 $"INNER JOIN Prioridades p on t.PrioridadId = p.Id " +
-                $"WHERE t.UserId = {userId}");
+                $"WHERE t.UserId = {userId} ORDER BY CreatedAt DESC");
 
             if (result.Count == 0)
             {

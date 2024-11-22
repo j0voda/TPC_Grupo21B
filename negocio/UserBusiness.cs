@@ -36,7 +36,7 @@ namespace negocio
 
         public override List<User> getAll()
         {
-            return userSelect("WHERE NOT t.EstadoId = 3");
+            return userSelect("");
         }
 
         public User getOneByUserPass(string user, string pass)
