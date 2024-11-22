@@ -28,17 +28,20 @@ namespace negocio
             };
         }
 
-        public override List<User> getAll()
+        private List<User> userSelect(string where)
         {
             return select($"t.{idColumn}, {String.Join(" ,", columns)}, r.Descripcion as RoleDescription, e.Descripcion as EstadoDescription",
-                " INNER JOIN Roles r ON r.Id=t.RolId INNER JOIN Estados_Usuarios e ON e.Id = t.EstadoId WHERE NOT t.EstadoId = 3");
+                $" INNER JOIN Roles r ON r.Id=t.RolId INNER JOIN Estados_Usuarios e ON e.Id = t.EstadoId {where}");
+        }
+
+        public override List<User> getAll()
+        {
+            return userSelect("WHERE NOT t.EstadoId = 3");
         }
 
         public User getOneByUserPass(string user, string pass)
         {
-            List<User> result = base.select(
-                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, r.Descripcion as RoleDescription, e.Descripcion as EstadoDescription", 
-                $" INNER JOIN Roles r ON r.Id=t.RolId INNER JOIN Estados_Usuarios e ON e.Id = t.EstadoId WHERE (t.Username='{user}' OR t.Email='{user}') AND t.Password='{pass}' AND NOT t.EstadoId = 3");
+            List<User> result = userSelect($"WHERE (t.Username='{user}' OR t.Email='{user}') AND t.Password='{pass}' AND NOT t.EstadoId = 3");
 
             if (result.Count == 0)
             {
@@ -76,9 +79,7 @@ namespace negocio
 
         private User getOneByDocument(User item)
         {
-            List<User> res = select(
-                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, r.Descripcion as RoleDescription, e.Descripcion as EstadoDescription", 
-                $" INNER JOIN Roles r ON r.Id=t.RolId INNER JOIN Estados_Usuarios e ON e.Id = t.EstadoId WHERE Documento={item.Documento}");
+            List<User> res = userSelect($"WHERE Documento={item.Documento}");
 
             if (res.Count == 0)
             {
@@ -86,6 +87,13 @@ namespace negocio
             }
 
             return res[0];
+        }
+
+        public bool userNameExists(string username)
+        {
+            List<User> res = userSelect($"WHERE Username='{username}' AND NOT EstadoId = 3");
+
+            return res.Count > 0;
         }
 
     }

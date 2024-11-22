@@ -13,7 +13,7 @@
         <h2>Gestión de usuarios</h2>
         <section class="mb-4">
             <button type="button" hidden id="btn-modal-open" data-bs-toggle="modal" data-bs-target="#createUserModal"></button>
-            <asp:Button ID="btnNewUser" runat="server" Text="Crear nuevo usuario" CssClass="btn btn-primary" OnClick="btnNewUser_Click" />
+            <asp:Button ID="btnNewUser" runat="server" Text="Crear nuevo usuario" CssClass="btn btn-primary" OnClick="btnNewUser_Click" UseSubmitBehavior="false"/>
         </section>
         <section class="row">
             <h3 class="">Usuarios existentes:</h3>
@@ -69,12 +69,12 @@
                     <div class="d-flex flex-column gap-3 mx-auto justify-content-center">
                         <div>
                             <label class="form-label">Mail:</label>
-                            <asp:TextBox ID="tbMail" runat="server" CssClass="form-control" TextMode="Email"></asp:TextBox>
+                            <asp:TextBox ID="tbMail" runat="server" CssClass="form-control" TextMode="Email" required="true"></asp:TextBox>
                         </div>
                         <div class="d-flex gap-3">
                             <div class="flex-grow-1">
                                 <label class="form-label">Número de documento:</label>
-                                <asp:TextBox ID="tbDocument" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                <asp:TextBox ID="tbDocument" runat="server" CssClass="form-control" TextMode="Number" required="true"></asp:TextBox>
                             </div>
                             <div class="flex-grow-1">
                                 <label class="form-label">Género:</label>

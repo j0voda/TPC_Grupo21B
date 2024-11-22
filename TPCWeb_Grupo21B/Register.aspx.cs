@@ -13,15 +13,10 @@ namespace TPCWeb_Grupo21B.Screens
     {
 
         public User user;
+        public bool usernameInUse = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (IsPostBack)
-            {
-                return;
-            }
-
             if (!AuthorizationManager.getInstance().isLogIn())
             {
                 Response.Redirect("Login.aspx", true);
@@ -96,6 +91,22 @@ namespace TPCWeb_Grupo21B.Screens
         private string removeIsInvalidClass(string classes)
         {
             return classes.Replace("is-invalid", "");
+        }
+
+        protected void tbUsername_TextChanged(object sender, EventArgs e)
+        {
+            var userB = new UserBusiness();
+            this.usernameInUse = userB.userNameExists(tbUsername.Text.Trim());
+            
+            if (this.usernameInUse)
+            {
+                tbUsername.CssClass = addIsInvalidClass(tbUsername.CssClass);
+            }
+            else
+            {
+                tbUsername.CssClass = removeIsInvalidClass(tbUsername.CssClass);
+            }
+
         }
     }
 }

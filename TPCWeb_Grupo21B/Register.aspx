@@ -36,8 +36,8 @@
                     <asp:TextBox ID="tbSurname" runat="server" placeholder="Proto" CssClass="form-control"></asp:TextBox>
                 </div>
                 <div class="flex-grow-1">
-                    <label class="form-label">Usuario:</label>
-                    <asp:TextBox ID="tbUsername" runat="server" placeholder="JuanProto" CssClass="form-control"></asp:TextBox>
+                    <label class="form-label">Usuario: <span class="text-danger fs-6 fw-light"><%= this.usernameInUse ? "Nombre de usuario invalido" : "" %></span></label>
+                    <asp:TextBox ID="tbUsername" runat="server" placeholder="JuanProto" CssClass="form-control" OnTextChanged="tbUsername_TextChanged" AutoPostBack="true"></asp:TextBox>
                 </div>
                 <div class="flex-grow-1">
                     <label class="form-label">Nueva contraseña:</label>
