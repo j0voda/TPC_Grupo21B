@@ -24,19 +24,20 @@ namespace negocio
                 "Documento", 
                 "Sexo", 
                 "RolId",
-                //"EstadoId"
+                "EstadoId"
             };
         }
 
         public override List<User> getAll()
         {
-            return select($"t.{idColumn}, {String.Join(" ,", columns)}, r.Descripcion as RoleDescription", " INNER JOIN Roles r ON r.Id=t.RolId");
+            return select($"t.{idColumn}, {String.Join(" ,", columns)}, r.Descripcion as RoleDescription, e.Descripcion as EstadoDescription", 
+                " INNER JOIN Roles r ON r.Id=t.RolId INNER JOIN Estados_Usuarios e ON t.EstadoId = e.Id");
         }
 
         public User getOneByUserPass(string user, string pass)
         {
             List<User> result = base.select(
-                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, r.Descripcion as RoleDescription", $" INNER JOIN Roles r ON r.Id=t.RolId WHERE (t.Username='{user}' OR t.Email='{user}') AND t.Password='{pass}'");
+                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, r.Descripcion as RoleDescription, e.Descripcion as EstadoDescription", $" INNER JOIN Roles r ON r.Id=t.RolId INNER JOIN Estados_Usuarios e ON t.EstadoId = e.Id WHERE (t.Username='{user}' OR t.Email='{user}') AND t.Password='{pass}'");
 
             if (result.Count == 0)
             {

@@ -29,7 +29,7 @@ namespace negocio
                 .setIntValue(obj.Documento)
                 .setStringValue(obj.Sexo)
                 .setIntValue((int)obj.Rol.Id)
-                //.setIntValue((int)obj.Estado.Id)
+                .setIntValue((int)obj.Estado.Id)
                 .build();
         }
 
@@ -48,7 +48,7 @@ namespace negocio
             user.Documento = reader.GetInt64(8);
             user.Sexo = reader.GetString(9);
             user.Rol = new Role() { Id = (Role.ROLES)reader["RolId"], Name = (string)reader["RoleDescription"] };
-            //user.Estado = new UserState() { Id = (UserState.USER_STATES)reader["EstadoId"], Name = (string)reader["EstadoDescription"] };
+            user.Estado = new UserState() { Id = (UserState.USER_STATES)reader["EstadoId"], Name = (string)reader["EstadoDescription"] };
 
             return user;
         }

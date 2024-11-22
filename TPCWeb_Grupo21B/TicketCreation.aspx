@@ -55,6 +55,13 @@
                     <asp:DropDownList ID="ddCliente" runat="server" SkinID="client-select-combo" CssClass="form-select rounded-bottom rounded-0"></asp:DropDownList>
                 </div>
             </div>
+            <% if (negocio.AuthorizationManager.getInstance().hasPermission(negocio.AuthorizationManager.PERMISSIONS.TICKET_ASSIGN))
+                { %>
+                <div>
+                    <label class="form-label">Asignar a:</label>
+                    <asp:DropDownList ID="ddUsuarios" runat="server" SkinID="user-select-combo" CssClass="form-select rounded-bottom rounded-0"></asp:DropDownList>
+                </div>
+              <%} %>
             <div>
                 <label class="form-label">Clasificación:</label>
                 <div class="d-flex gap-1">

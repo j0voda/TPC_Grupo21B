@@ -51,6 +51,15 @@ namespace TPCWeb_Grupo21B.Screens
         protected global::System.Web.UI.WebControls.DropDownList ddCliente;
 
         /// <summary>
+        /// ddUsuarios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddUsuarios;
+
+        /// <summary>
         /// clientError control.
         /// </summary>
         /// <remarks>
