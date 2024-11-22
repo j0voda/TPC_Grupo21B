@@ -77,9 +77,9 @@
             <div>
                 <label class="form-label">Descripción detallada:</label>
                 <asp:Label runat="server" ID="descError" Text="" CssClass="invalid-feedback"></asp:Label>
-                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" OnTextChanged="txtDescripcion_TextChanged" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" OnTextChanged="txtDescripcion_TextChanged" TextMode="MultiLine" required></asp:TextBox>
             </div>
-            <asp:Button ID="btnCrear" runat="server" Text="Crear" class="btn btn-success" OnClick="btnCrear_Click"/>
+            <asp:Button ID="btnCrear" runat="server" Text="Crear" CssClass="btn btn-success" OnClick="btnCrear_Click"/>
         </div>
     </main>
 

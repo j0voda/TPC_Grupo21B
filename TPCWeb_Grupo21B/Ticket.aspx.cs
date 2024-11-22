@@ -153,6 +153,8 @@ namespace TPCWeb_Grupo21B.Screens
 
                 obs.Observation = obs.GenerateAutomaticObservation(3, userSelect.SelectedItem.Text);
                 obsB.saveOne(obs);
+
+                ticket.UserId = userIndex;
             }
 
             ticket.Clasificacion.Id = clasIndex;
