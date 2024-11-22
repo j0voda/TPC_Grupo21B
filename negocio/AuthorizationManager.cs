@@ -26,10 +26,10 @@ namespace negocio
 
         private static Dictionary<PERMISSIONS, List<Role.ROLES>> AUTHORIZATIONS = new Dictionary<PERMISSIONS, List<Role.ROLES>> {
             { PERMISSIONS.USER_MANAGEMENT, new List<Role.ROLES> { Role.ROLES.ADMIN } },
-            { PERMISSIONS.CREATE_TICKETS, new List<Role.ROLES> { Role.ROLES.OPERATOR } },
+            { PERMISSIONS.CREATE_TICKETS, new List<Role.ROLES> { Role.ROLES.OPERATOR, Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR } },
             { PERMISSIONS.SEE_ALL_TICKETS, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR } },
             { PERMISSIONS.CLIENT_MANAGENT, new List<Role.ROLES> { Role.ROLES.ADMIN, Role.ROLES.SUPERVISOR, Role.ROLES.OPERATOR } },
-            { PERMISSIONS.TICKET_ASSIGN, new List<Role.ROLES> { Role.ROLES.SUPERVISOR } }
+            { PERMISSIONS.TICKET_ASSIGN, new List<Role.ROLES> { Role.ROLES.SUPERVISOR, Role.ROLES.ADMIN } }
         };
 
         private static AuthorizationManager instance;

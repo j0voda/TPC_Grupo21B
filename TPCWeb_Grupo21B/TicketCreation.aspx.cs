@@ -14,6 +14,7 @@ namespace TPCWeb_Grupo21B.Screens
         public List<Clasificacion> clasificaciones;
         public List<Prioridad> prioridades;
         private List<Client> clients;
+        private List<User> users;
         private Client selectedClient;
         public User user;
         public dominio.Ticket ticket;
@@ -21,19 +22,20 @@ namespace TPCWeb_Grupo21B.Screens
         {
             if (IsPostBack) return;
 
-            loadData();
-
             var auth = AuthorizationManager.getInstance();
             if (!auth.isLogIn())
             {
                 Response.Redirect("Login.aspx", true);
             }
+            loadData();
+
             user = auth.User;
         }
 
         private void loadData()
         {
             loadClients();
+            loadUsers();
 
             ClasificacionBussiness clasBusiness = new ClasificacionBussiness();
             PrioridadBussiness prioBusiness = new PrioridadBussiness();
@@ -50,6 +52,22 @@ namespace TPCWeb_Grupo21B.Screens
             this.clasSelect.DataValueField = "Id";
             this.clasSelect.DataTextField = "Descripcion";
             this.clasSelect.DataBind();
+        }
+
+        private void loadUsers()
+        {
+            var auth = AuthorizationManager.getInstance();
+            var usersB = new UserBusiness();
+            var uState = new UserState();
+            users = usersB.getAll();
+
+            this.ddUsuarios.DataSource = users.Where(u => u.Estado.Id == (int)UserState.USER_STATES.ACTIVE).ToList();
+            this.ddUsuarios.DataValueField = "Id";
+            this.ddUsuarios.DataTextField = "Username";
+            this.ddUsuarios.SelectedValue = auth.User.Id.ToString();
+            this.ddUsuarios.DataBind();
+            // Agregar el ítem de valor por defecto al inicio de la lista
+            //ddUsuarios.Items.Insert(0, new ListItem("Sin asignar", "-1"));
         }
 
         private void loadClients()
@@ -111,7 +129,7 @@ namespace TPCWeb_Grupo21B.Screens
                 ticket = new dominio.Ticket();
                 ticket.Asunto = txtAsunto.Text;
                 ticket.ClientDocument = Int64.Parse(doc);
-                ticket.UserId = auth.User.Id;
+                ticket.UserId = auth.hasPermission(AuthorizationManager.PERMISSIONS.TICKET_ASSIGN) ? Convert.ToInt64(this.ddUsuarios.SelectedValue) : auth.User.Id;
             
                 ticket.Estado = new Estado();
                 ticket.Estado.Id = 1;
@@ -134,6 +152,36 @@ namespace TPCWeb_Grupo21B.Screens
                 if (result < 0)
                 {
                     return;
+                }
+
+                ObservacionBussiness observacionBussiness = new ObservacionBussiness();
+                string obsText = "";
+                var obs = new Observacion()
+                {
+                    Observation = obsText,
+                    UserId = auth.User.Id,
+                    TicketId = result
+                };
+
+                obs.Observation = obs.GenerateAutomaticObservation(4, "Abierto");
+                observacionBussiness.saveOne(obs);
+                
+                if(ticket.UserId >= 0)
+                {
+                    string asign = "";
+                    var obsAsign = new Observacion()
+                    {
+                        Observation = asign,
+                        UserId = auth.User.Id,
+                        TicketId = result
+                    };
+
+                    obsAsign.Observation = obsAsign.GenerateAutomaticObservation(4, "Asignado");
+                    observacionBussiness.saveOne(obsAsign);
+
+                    ticket.Id = result;
+                    ticket.Estado.Id = 5;
+                    tcktBus.updateOne(ticket);
                 }
 
                 Response.Redirect("/Default");
